@@ -1,270 +1,330 @@
-import React, { useState } from 'react';
-import { 
-  Bot, BookOpen, Wrench, MessageSquare, Database, 
-  Network, Send, BarChart, ChevronRight, CheckCircle2, 
-  Lightbulb, BrainCircuit, Blocks, Sparkles, Server
-} from 'lucide-react';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Copilot Studio Guide</title>
+    
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Load Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
 
-// --- DATA ---
+    <style>
+        /* Custom scrollbar for a polished look */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+    </style>
+</head>
+<body class="min-h-screen bg-slate-900 text-slate-100 font-sans selection:bg-blue-500 selection:text-white">
 
-const coreConcepts = [
-  {
-    title: "Advanced Topics & Triggers",
-    description: "Go beyond basic keyword matching. Use advanced conditions, event-driven triggers, and guided conversational nodes.",
-    icon: <MessageSquare className="w-8 h-8 mb-4 text-blue-400" />
-  },
-  {
-    title: "Tool Integrations",
-    description: "Connect to 1,500+ Power Platform connectors, custom APIs, and Power Automate flows to execute real-world tasks.",
-    icon: <Wrench className="w-8 h-8 mb-4 text-purple-400" />
-  },
-  {
-    title: "Conversation Memory",
-    description: "Utilize Global and Topic-level variables to remember user context, inputs, and preferences across the entire session.",
-    icon: <Database className="w-8 h-8 mb-4 text-indigo-400" />
-  },
-  {
-    title: "Multi-Agent Orchestration",
-    description: "Design modular solutions by delegating specific domains to embedded Child Agents or external Connected Agents.",
-    icon: <Network className="w-8 h-8 mb-4 text-pink-400" />
-  }
-];
-
-const steps = [
-  {
-    id: 1,
-    title: "Agent Creation & Config",
-    icon: <Bot className="w-6 h-6" />,
-    content: "Create a new agent in Copilot Studio (Full). Provide a clear description and set detailed Agent Instructions defining its role (e.g., 'Autonomous IT helpdesk assistant'). Ensure generative answers are enabled, select a powerful GPT model, and disable general web knowledge to prevent hallucinations.",
-    tips: ["Use strict instructions for tone.", "Turn off 'Use general knowledge'."]
-  },
-  {
-    id: 2,
-    title: "Adding Knowledge Sources",
-    icon: <BookOpen className="w-6 h-6" />,
-    content: "Ground your agent with internal enterprise data. Add internal SharePoint sites (e.g., IT Support FAQs) or upload PDF documents (e.g., IT Handbook). Copilot Studio indexes this content, allowing the agent to answer questions using built-in Retrieval-Augmented Generation (RAG) with citations.",
-    tips: ["Verify SharePoint indexing via Microsoft Graph.", "Use high-quality, structured PDFs."]
-  },
-  {
-    id: 3,
-    title: "Integrating Tools",
-    icon: <Wrench className="w-6 h-6" />,
-    content: "Transform your agent from a Q&A bot to a task executor. Add a Power Automate flow (e.g., 'Reset User Password') as a Tool. Define the tool's inputs (username) and outputs (success message), and configure authentication (Maker vs. User). Provide a clear description so the Copilot planner knows when to invoke it.",
-    tips: ["Write descriptive tool names.", "Map inputs to user variables cleanly."]
-  },
-  {
-    id: 4,
-    title: "Custom Topics & Triggers",
-    icon: <MessageSquare className="w-6 h-6" />,
-    content: "Build a structured multi-turn dialogue. Create a 'Password Reset Workflow' topic triggered by phrases like 'reset my password'. Use 'Ask a question' nodes to gather the User ID, followed by a confirmation node. Then, route the flow to a 'Call an action' node to execute the tool configured in Step 3.",
-    tips: ["Use phrase list triggers for variations.", "Add error handling branches."]
-  },
-  {
-    id: 5,
-    title: "Using Variables (Memory)",
-    icon: <Database className="w-6 h-6" />,
-    content: "Maintain context throughout the chat. Save the extracted User ID into a Topic-level variable to pass into the password reset tool. If you need the ID across different topics, upgrade it to a Global variable. This prevents the agent from repetitively asking the user for the same information.",
-    tips: ["Topic variables = Local scope.", "Global variables = Session scope."]
-  },
-  {
-    id: 6,
-    title: "Child Agent (Modular Design)",
-    icon: <Network className="w-6 h-6" />,
-    content: "Scale your architecture. Instead of one massive agent, create a child agent called 'Security Policy Advisor' with specialized knowledge and tools. Configure the main parent IT agent to automatically route security or password policy queries to this child agent.",
-    tips: ["Child agents are version-controlled within the solution.", "Keeps parent agent lightweight."]
-  },
-  {
-    id: 7,
-    title: "Testing & Deployment",
-    icon: <Send className="w-6 h-6" />,
-    content: "Test the flow in the built-in testing canvas. Check if the tool triggers correctly and variables are stored. Once verified, publish the agent to Microsoft Teams. Configure 'Microsoft (Entra ID)' authentication to ensure seamless Single Sign-On (SSO) for internal employees.",
-    tips: ["Always test edge cases before publishing.", "Wait 1-2 mins for Teams propagation."]
-  },
-  {
-    id: 8,
-    title: "Analytics & Monitoring",
-    icon: <BarChart className="w-6 h-6" />,
-    content: "Continuous improvement is key. Use the Analytics dashboard to track session volumes, resolution rates, and tool usage frequency. Review conversation transcripts for escalated or abandoned sessions to refine topic wording or add missing knowledge sources.",
-    tips: ["Monitor 'CSAT' scores.", "Identify frequently triggered fallback topics."]
-  }
-];
-
-const bestPractices = [
-  "Use structured topics for complex workflows requiring multi-turn clarification.",
-  "Leverage existing Power Platform connectors to perform actions instead of reinventing the wheel.",
-  "Use variables for context continuity, but manage them wisely (Topic vs. Global).",
-  "Consider child agents for modular design when building large-scale enterprise solutions.",
-  "Implement governance: restrict general web knowledge for grounded, trusted responses."
-];
-
-// --- COMPONENTS ---
-
-export default function App() {
-  const [activeStep, setActiveStep] = useState(1);
-
-  return (
-    <div className="min-h-screen bg-slate-900 text-slate-100 font-sans selection:bg-blue-500 selection:text-white">
-      
-      {/* Header / Hero Section */}
-      <header className="relative overflow-hidden border-b border-slate-800 bg-slate-950 pt-24 pb-20">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-[400px] bg-blue-600/20 blur-[120px] rounded-full pointer-events-none" />
+    <!-- Header / Hero Section -->
+    <header class="relative overflow-hidden border-b border-slate-800 bg-slate-950 pt-24 pb-20">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-[400px] bg-blue-600/20 blur-[120px] rounded-full pointer-events-none"></div>
         
-        <div className="max-w-6xl mx-auto px-6 relative z-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm font-medium mb-6">
-            <Sparkles className="w-4 h-4" />
-            Session Companion Guide
-          </div>
-          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6">
-            Advanced <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
-              Copilot Studio
-            </span>
-          </h1>
-          <p className="text-xl text-slate-400 max-w-2xl leading-relaxed">
-            A practical reference guide bridging the gap between conversational AI and enterprise automation. Review core concepts and trace the interactive worked example.
-          </p>
-        </div>
-      </header>
-
-      {/* Core Concepts Section */}
-      <section className="py-20 bg-slate-900 border-b border-slate-800">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="flex items-center gap-3 mb-12">
-            <BrainCircuit className="w-8 h-8 text-blue-400" />
-            <h2 className="text-3xl font-bold">Beyond the Basics</h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {coreConcepts.map((concept, idx) => (
-              <div key={idx} className="bg-slate-800/50 border border-slate-700/50 rounded-2xl p-6 hover:bg-slate-800 transition-colors duration-300">
-                {concept.icon}
-                <h3 className="text-xl font-semibold mb-3 text-slate-200">{concept.title}</h3>
-                <p className="text-slate-400 text-sm leading-relaxed">{concept.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Interactive Walkthrough Section */}
-      <section className="py-24 bg-slate-950 relative">
-        <div className="absolute right-0 top-1/4 w-96 h-96 bg-purple-600/10 blur-[100px] rounded-full pointer-events-none" />
-        
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="mb-16 max-w-3xl">
-            <div className="flex items-center gap-3 mb-4">
-              <Blocks className="w-8 h-8 text-purple-400" />
-              <h2 className="text-4xl font-bold">The IT Support Assistant</h2>
+        <div class="max-w-6xl mx-auto px-6 relative z-10">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm font-medium mb-6">
+                <i data-lucide="sparkles" class="w-4 h-4"></i>
+                Session Companion Guide
             </div>
-            <p className="text-lg text-slate-400">
-              Interactive Walkthrough: See how we combine Retrieval-Augmented Generation (RAG), Task execution, and autonomous logic to deflect routine IT helpdesk tickets.
+            <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6">
+                Advanced <br />
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
+                    Copilot Studio
+                </span>
+            </h1>
+            <p class="text-xl text-slate-400 max-w-2xl leading-relaxed">
+                A practical reference guide bridging the gap between conversational AI and enterprise automation. Review core concepts and trace the interactive worked example.
             </p>
-          </div>
+        </div>
+    </header>
 
-          <div className="flex flex-col lg:flex-row gap-12">
-            {/* Stepper Navigation */}
-            <div className="lg:w-1/3 flex flex-col gap-2">
-              {steps.map((step) => (
-                <button
-                  key={step.id}
-                  onClick={() => setActiveStep(step.id)}
-                  className={`flex items-center gap-4 p-4 rounded-xl text-left transition-all duration-300 border ${
-                    activeStep === step.id
-                      ? 'bg-blue-600/10 border-blue-500/50 text-blue-300'
-                      : 'bg-slate-900 border-slate-800 text-slate-500 hover:bg-slate-800 hover:text-slate-300'
-                  }`}
-                >
-                  <div className={`p-2 rounded-lg ${activeStep === step.id ? 'bg-blue-500/20' : 'bg-slate-800'}`}>
-                    {step.icon}
-                  </div>
-                  <div className="flex-1 font-medium">
-                    <div className="text-xs uppercase tracking-wider opacity-60 mb-1">Step {step.id}</div>
-                    {step.title}
-                  </div>
-                  <ChevronRight className={`w-5 h-5 transition-transform ${activeStep === step.id ? 'translate-x-1' : 'opacity-0'}`} />
-                </button>
-              ))}
+    <!-- Core Concepts Section -->
+    <section class="py-20 bg-slate-900 border-b border-slate-800">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="flex items-center gap-3 mb-12">
+                <i data-lucide="brain-circuit" class="w-8 h-8 text-blue-400"></i>
+                <h2 class="text-3xl font-bold">Beyond the Basics</h2>
+            </div>
+            <div id="concepts-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Walkthrough Section -->
+    <section class="py-24 bg-slate-950 relative">
+        <div class="absolute right-0 top-1/4 w-96 h-96 bg-purple-600/10 blur-[100px] rounded-full pointer-events-none"></div>
+        
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="mb-16 max-w-3xl">
+                <div class="flex items-center gap-3 mb-4">
+                    <i data-lucide="blocks" class="w-8 h-8 text-purple-400"></i>
+                    <h2 class="text-4xl font-bold">The IT Support Assistant</h2>
+                </div>
+                <p class="text-lg text-slate-400">
+                    Interactive Walkthrough: See how we combine Retrieval-Augmented Generation (RAG), Task execution, and autonomous logic to deflect routine IT helpdesk tickets.
+                </p>
             </div>
 
-            {/* Step Content Display */}
-            <div className="lg:w-2/3">
-              <div className="bg-slate-900 border border-slate-700 rounded-3xl p-8 md:p-12 min-h-[500px] shadow-2xl relative overflow-hidden">
-                {/* Background decorative glow */}
-                <div className="absolute -top-24 -right-24 w-64 h-64 bg-blue-500/20 blur-[80px] rounded-full pointer-events-none" />
-                
-                {steps.map((step) => (
-                  <div 
-                    key={step.id}
-                    className={`transition-all duration-500 absolute inset-0 p-8 md:p-12 ${
-                      activeStep === step.id 
-                        ? 'opacity-100 translate-x-0 pointer-events-auto' 
-                        : 'opacity-0 translate-x-8 pointer-events-none'
-                    }`}
-                  >
-                    <div className="flex items-center gap-4 mb-8">
-                      <div className="p-4 bg-blue-500/20 text-blue-400 rounded-2xl">
-                        {step.icon}
-                      </div>
-                      <div>
-                        <div className="text-blue-400 font-semibold tracking-wider text-sm mb-1 uppercase">Phase {step.id}</div>
-                        <h3 className="text-3xl font-bold text-slate-100">{step.title}</h3>
-                      </div>
+            <div class="flex flex-col lg:flex-row gap-12">
+                <!-- Stepper Navigation -->
+                <div id="stepper-nav" class="lg:w-1/3 flex flex-col gap-2">
+                    <!-- Nav buttons populated by JS -->
+                </div>
+
+                <!-- Step Content Display -->
+                <div class="lg:w-2/3">
+                    <div class="bg-slate-900 border border-slate-700 rounded-3xl p-8 md:p-12 min-h-[500px] shadow-2xl relative overflow-hidden">
+                        <!-- Background decorative glow -->
+                        <div class="absolute -top-24 -right-24 w-64 h-64 bg-blue-500/20 blur-[80px] rounded-full pointer-events-none"></div>
+                        
+                        <div id="step-content-inner" class="relative w-full h-full min-h-[400px]">
+                            <!-- Content blocks populated by JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Best Practices Section -->
+    <section class="py-20 bg-slate-900 border-t border-slate-800">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">Golden Rules & Next Steps</h2>
+                <p class="text-slate-400">Keep these principles in mind when deploying enterprise AI solutions.</p>
+            </div>
+            
+            <div id="practices-container" class="space-y-4">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 py-12 border-t border-slate-800 text-center text-slate-500">
+        <div class="flex justify-center items-center gap-2 mb-4">
+            <i data-lucide="server" class="w-5 h-5"></i>
+            <span class="font-semibold tracking-wide">Copilot Studio Advanced Implementation</span>
+        </div>
+        <p class="text-sm">Refer to Microsoft Learn Agent Labs for hands-on scenario practice.</p>
+    </footer>
+
+    <!-- Application Logic -->
+    <script>
+        // --- DATA ---
+        const coreConcepts = [
+            {
+                title: "Advanced Topics & Triggers",
+                description: "Go beyond basic keyword matching. Use advanced conditions, event-driven triggers, and guided conversational nodes.",
+                icon: "message-square", colorClass: "text-blue-400"
+            },
+            {
+                title: "Tool Integrations",
+                description: "Connect to 1,500+ Power Platform connectors, custom APIs, and Power Automate flows to execute real-world tasks.",
+                icon: "wrench", colorClass: "text-purple-400"
+            },
+            {
+                title: "Conversation Memory",
+                description: "Utilize Global and Topic-level variables to remember user context, inputs, and preferences across the entire session.",
+                icon: "database", colorClass: "text-indigo-400"
+            },
+            {
+                title: "Multi-Agent Orchestration",
+                description: "Design modular solutions by delegating specific domains to embedded Child Agents or external Connected Agents.",
+                icon: "network", colorClass: "text-pink-400"
+            }
+        ];
+
+        const steps = [
+            {
+                id: 1,
+                title: "Agent Creation & Config",
+                icon: "bot",
+                content: "Create a new agent in Copilot Studio (Full). Provide a clear description and set detailed Agent Instructions defining its role (e.g., 'Autonomous IT helpdesk assistant'). Ensure generative answers are enabled, select a powerful GPT model, and disable general web knowledge to prevent hallucinations.",
+                tips: ["Use strict instructions for tone.", "Turn off 'Use general knowledge'."]
+            },
+            {
+                id: 2,
+                title: "Adding Knowledge Sources",
+                icon: "book-open",
+                content: "Ground your agent with internal enterprise data. Add internal SharePoint sites (e.g., IT Support FAQs) or upload PDF documents (e.g., IT Handbook). Copilot Studio indexes this content, allowing the agent to answer questions using built-in Retrieval-Augmented Generation (RAG) with citations.",
+                tips: ["Verify SharePoint indexing via Microsoft Graph.", "Use high-quality, structured PDFs."]
+            },
+            {
+                id: 3,
+                title: "Integrating Tools",
+                icon: "wrench",
+                content: "Transform your agent from a Q&A bot to a task executor. Add a Power Automate flow (e.g., 'Reset User Password') as a Tool. Define the tool's inputs (username) and outputs (success message), and configure authentication (Maker vs. User). Provide a clear description so the Copilot planner knows when to invoke it.",
+                tips: ["Write descriptive tool names.", "Map inputs to user variables cleanly."]
+            },
+            {
+                id: 4,
+                title: "Custom Topics & Triggers",
+                icon: "message-square",
+                content: "Build a structured multi-turn dialogue. Create a 'Password Reset Workflow' topic triggered by phrases like 'reset my password'. Use 'Ask a question' nodes to gather the User ID, followed by a confirmation node. Then, route the flow to a 'Call an action' node to execute the tool configured in Step 3.",
+                tips: ["Use phrase list triggers for variations.", "Add error handling branches."]
+            },
+            {
+                id: 5,
+                title: "Using Variables (Memory)",
+                icon: "database",
+                content: "Maintain context throughout the chat. Save the extracted User ID into a Topic-level variable to pass into the password reset tool. If you need the ID across different topics, upgrade it to a Global variable. This prevents the agent from repetitively asking the user for the same information.",
+                tips: ["Topic variables = Local scope.", "Global variables = Session scope."]
+            },
+            {
+                id: 6,
+                title: "Child Agent (Modular Design)",
+                icon: "network",
+                content: "Scale your architecture. Instead of one massive agent, create a child agent called 'Security Policy Advisor' with specialized knowledge and tools. Configure the main parent IT agent to automatically route security or password policy queries to this child agent.",
+                tips: ["Child agents are version-controlled within the solution.", "Keeps parent agent lightweight."]
+            },
+            {
+                id: 7,
+                title: "Testing & Deployment",
+                icon: "send",
+                content: "Test the flow in the built-in testing canvas. Check if the tool triggers correctly and variables are stored. Once verified, publish the agent to Microsoft Teams. Configure 'Microsoft (Entra ID)' authentication to ensure seamless Single Sign-On (SSO) for internal employees.",
+                tips: ["Always test edge cases before publishing.", "Wait 1-2 mins for Teams propagation."]
+            },
+            {
+                id: 8,
+                title: "Analytics & Monitoring",
+                icon: "bar-chart",
+                content: "Continuous improvement is key. Use the Analytics dashboard to track session volumes, resolution rates, and tool usage frequency. Review conversation transcripts for escalated or abandoned sessions to refine topic wording or add missing knowledge sources.",
+                tips: ["Monitor 'CSAT' scores.", "Identify frequently triggered fallback topics."]
+            }
+        ];
+
+        const bestPractices = [
+            "Use structured topics for complex workflows requiring multi-turn clarification.",
+            "Leverage existing Power Platform connectors to perform actions instead of reinventing the wheel.",
+            "Use variables for context continuity, but manage them wisely (Topic vs. Global).",
+            "Consider child agents for modular design when building large-scale enterprise solutions.",
+            "Implement governance: restrict general web knowledge for grounded, trusted responses."
+        ];
+
+        // --- STATE & RENDER LOGIC ---
+        let activeStepId = 1;
+
+        function initData() {
+            // Render Core Concepts
+            const conceptsContainer = document.getElementById('concepts-container');
+            coreConcepts.forEach(concept => {
+                conceptsContainer.innerHTML += `
+                    <div class="bg-slate-800/50 border border-slate-700/50 rounded-2xl p-6 hover:bg-slate-800 transition-colors duration-300">
+                        <i data-lucide="${concept.icon}" class="w-8 h-8 mb-4 ${concept.colorClass}"></i>
+                        <h3 class="text-xl font-semibold mb-3 text-slate-200">${concept.title}</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">${concept.description}</p>
+                    </div>
+                `;
+            });
+
+            // Render Best Practices
+            const practicesContainer = document.getElementById('practices-container');
+            bestPractices.forEach((practice, idx) => {
+                practicesContainer.innerHTML += `
+                    <div class="flex items-center gap-4 p-5 bg-slate-800/40 border border-slate-700/50 rounded-xl hover:bg-slate-800 transition-colors">
+                        <div class="w-10 h-10 rounded-full bg-indigo-500/10 flex items-center justify-center shrink-0">
+                            <span class="text-indigo-400 font-bold">${idx + 1}</span>
+                        </div>
+                        <p class="text-slate-200 text-lg">${practice}</p>
+                    </div>
+                `;
+            });
+        }
+
+        function renderStepper() {
+            const navContainer = document.getElementById('stepper-nav');
+            const contentContainer = document.getElementById('step-content-inner');
+            
+            navContainer.innerHTML = '';
+            contentContainer.innerHTML = '';
+
+            steps.forEach(step => {
+                const isActive = step.id === activeStepId;
+
+                // 1. Render Nav Button
+                const btnClass = isActive 
+                    ? 'bg-blue-600/10 border-blue-500/50 text-blue-300' 
+                    : 'bg-slate-900 border-slate-800 text-slate-500 hover:bg-slate-800 hover:text-slate-300';
+                const iconBg = isActive ? 'bg-blue-500/20' : 'bg-slate-800';
+                const chevronOpacity = isActive ? 'translate-x-1 opacity-100' : 'opacity-0 -translate-x-2';
+
+                const btn = document.createElement('button');
+                btn.className = `flex items-center gap-4 p-4 rounded-xl text-left transition-all duration-300 border w-full ${btnClass}`;
+                btn.onclick = () => {
+                    activeStepId = step.id;
+                    renderStepper();
+                };
+
+                btn.innerHTML = `
+                    <div class="p-2 rounded-lg ${iconBg} transition-colors">
+                        <i data-lucide="${step.icon}" class="w-6 h-6"></i>
+                    </div>
+                    <div class="flex-1 font-medium">
+                        <div class="text-xs uppercase tracking-wider opacity-60 mb-1">Step ${step.id}</div>
+                        ${step.title}
+                    </div>
+                    <i data-lucide="chevron-right" class="w-5 h-5 transition-all duration-300 ${chevronOpacity}"></i>
+                `;
+                navContainer.appendChild(btn);
+
+                // 2. Render Content Panel
+                const panelVisibility = isActive 
+                    ? 'opacity-100 translate-x-0 pointer-events-auto relative' 
+                    : 'opacity-0 translate-x-8 pointer-events-none absolute top-0 left-0 w-full';
+
+                const tipsHtml = step.tips.map(tip => `
+                    <li class="flex items-start gap-3 text-slate-300">
+                        <i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-500 shrink-0 mt-0.5"></i>
+                        <span>${tip}</span>
+                    </li>
+                `).join('');
+
+                const panel = document.createElement('div');
+                panel.className = `transition-all duration-500 ${panelVisibility}`;
+                panel.innerHTML = `
+                    <div class="flex items-center gap-4 mb-8">
+                        <div class="p-4 bg-blue-500/20 text-blue-400 rounded-2xl">
+                            <i data-lucide="${step.icon}" class="w-8 h-8"></i>
+                        </div>
+                        <div>
+                            <div class="text-blue-400 font-semibold tracking-wider text-sm mb-1 uppercase">Phase ${step.id}</div>
+                            <h3 class="text-3xl font-bold text-slate-100">${step.title}</h3>
+                        </div>
                     </div>
                     
-                    <p className="text-xl text-slate-300 leading-relaxed mb-10">
-                      {step.content}
+                    <p class="text-xl text-slate-300 leading-relaxed mb-10">
+                        ${step.content}
                     </p>
 
-                    <div className="bg-slate-950/50 rounded-xl p-6 border border-slate-800">
-                      <h4 className="flex items-center gap-2 text-sm font-bold text-slate-400 uppercase tracking-wider mb-4">
-                        <Lightbulb className="w-4 h-4 text-yellow-400" />
-                        Pro Tips
-                      </h4>
-                      <ul className="space-y-3">
-                        {step.tips.map((tip, idx) => (
-                          <li key={idx} className="flex items-start gap-3 text-slate-300">
-                            <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
-                            <span>{tip}</span>
-                          </li>
-                        ))}
-                      </ul>
+                    <div class="bg-slate-950/50 rounded-xl p-6 border border-slate-800">
+                        <h4 class="flex items-center gap-2 text-sm font-bold text-slate-400 uppercase tracking-wider mb-4">
+                            <i data-lucide="lightbulb" class="w-4 h-4 text-yellow-400"></i>
+                            Pro Tips
+                        </h4>
+                        <ul class="space-y-3">
+                            ${tipsHtml}
+                        </ul>
                     </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+                `;
+                contentContainer.appendChild(panel);
+            });
 
-      {/* Best Practices Section */}
-      <section className="py-20 bg-slate-900 border-t border-slate-800">
-        <div className="max-w-4xl mx-auto px-6">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Golden Rules & Next Steps</h2>
-            <p className="text-slate-400">Keep these principles in mind when deploying enterprise AI solutions.</p>
-          </div>
-          
-          <div className="space-y-4">
-            {bestPractices.map((practice, idx) => (
-              <div key={idx} className="flex items-center gap-4 p-5 bg-slate-800/40 border border-slate-700/50 rounded-xl hover:bg-slate-800 transition-colors">
-                <div className="w-10 h-10 rounded-full bg-indigo-500/10 flex items-center justify-center shrink-0">
-                  <span className="text-indigo-400 font-bold">{idx + 1}</span>
-                </div>
-                <p className="text-slate-200 text-lg">{practice}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+            // Re-initialize Lucide icons for the newly injected HTML
+            lucide.createIcons();
+        }
 
-      {/* Footer */}
-      <footer className="bg-slate-950 py-12 border-t border-slate-800 text-center text-slate-500">
-        <div className="flex justify-center items-center gap-2 mb-4">
-          <Server className="w-5 h-5" />
-          <span className="font-semibold tracking-wide">Copilot Studio Advanced Implementation</span>
-        </div>
-        <p className="text-sm">Refer to Microsoft Learn Agent Labs for hands-on scenario practice.</p>
-      </footer>
-    </div>
-  );
-}
+        // Initialize App on Load
+        document.addEventListener('DOMContentLoaded', () => {
+            initData();
+            renderStepper();
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>
