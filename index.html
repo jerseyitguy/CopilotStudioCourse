@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Advanced Copilot Studio: Interactive Guide</title>
+<!-- Chosen Palette: Ocean & Emerald (Deep Blue: #0f172a, Teal: #0d9488, Emerald: #10b981, Light Slate: #f8fafc) -->
+<!-- Application Structure Plan: The application transitions from conceptual overviews into a deep, interactive "14 Steps to Mastery" section. The core change uses a vertical master-detail layout for the 14 steps, allowing users to scroll through the advanced curriculum (extracted from the provided slide outline) without overwhelming the screen or introducing vertical bloat. Explicit slide references have been removed to present it purely as an interactive learning module. The journey finishes with the async governance flow. -->
+<!-- Visualization & Content Choices: 
+1. Legacy vs Modern -> Compare -> Radar Chart (Chart.js) -> Best visual for comparing multiple qualitative dimensions simultaneously.
+2. Knowledge Sources -> Organize/Inform -> Doughnut Chart (Chart.js) -> Shows the composition of grounding data types.
+3. Connector Ecosystem -> Inform/Impact -> Large Dynamic Stats + Grid -> Highlights the massive scale (1400+) effectively without cluttering.
+4. 14 Steps to Mastery -> Organize/Inform -> Vertical Scrollable Tabs (HTML/JS) -> Accommodates a large number of sequential steps cleanly.
+5. Audit Pipeline -> Organize -> Styled HTML Flow -> Visualizes the asynchronous time delay (3 hours) clearly.
+All charts use strictly configured Chart.js. NO SVG or Mermaid used. -->
+<!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f8fafc;
+    color: #0f172a;
+    overflow-x: hidden;
+}
+.chart-container {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 350px;
+    max-height: 400px;
+}
+@media (min-width: 768px) {
+    .chart-container {
+        height: 400px;
+    }
+}
+.glass-panel {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(15, 23, 42, 0.05);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+}
+.gradient-text {
+    background: linear-gradient(135deg, #0d9488, #2563eb);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+/* Custom Scrollbar for the vertical tabs */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: #f1f5f9; 
+    border-radius: 8px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #cbd5e1; 
+    border-radius: 8px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8; 
+}
+.step-nav-btn {
+    border-left: 4px solid transparent;
+}
+.step-nav-btn.active {
+    background-color: #f0fdfa; /* Tailwind teal-50 */
+    border-left: 4px solid #0d9488;
+    color: #0f172a;
+}
+.step-content {
+    display: none;
+    animation: fadeIn 0.4s ease-in-out;
+}
+.step-content.active {
+    display: block;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+<body class="antialiased selection:bg-teal-500 selection:text-white">
+
+<nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+        <div class="text-2xl font-extrabold tracking-tight text-slate-800">Copilot<span class="text-teal-600">Studio</span> Advanced</div>
+        <div class="hidden md:flex space-x-8 font-semibold text-sm text-slate-600">
+            <a href="#evolution" class="hover:text-teal-600 transition-colors">Evolution</a>
+            <a href="#architecture" class="hover:text-teal-600 transition-colors">Architecture</a>
+            <a href="#mastery" class="hover:text-teal-600 transition-colors">14 Steps to Mastery</a>
+            <a href="#governance" class="hover:text-teal-600 transition-colors">Governance</a>
+        </div>
+    </div>
+</nav>
+
+<header class="pt-32 pb-20 px-6 relative overflow-hidden bg-slate-900 text-white">
+    <div class="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-teal-900 opacity-90"></div>
+    <div class="max-w-4xl mx-auto relative z-10 text-center">
+        <div class="inline-block px-4 py-1.5 mb-6 rounded-full border border-teal-500/30 bg-teal-500/10 text-teal-300 text-sm font-bold tracking-wider uppercase">
+            Advanced Masterclass
+        </div>
+        <h1 class="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight leading-tight">
+            Building Enterprise Agents:<br />
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-emerald-400">Copilot Studio</span>
+        </h1>
+        <p class="text-xl md:text-2xl text-slate-300 mb-10 max-w-3xl mx-auto font-light leading-relaxed">
+            Exploring beyond-the-basics capabilities: advanced topic triggers, tool integrations, conversational variables, multi-agent orchestration, and channel deployment.
+        </p>
+    </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-6 py-16 space-y-32">
+
+    <!-- Section: Evolution Context -->
+    <section id="evolution" class="scroll-mt-32">
+        <div class="max-w-3xl mx-auto text-center mb-16">
+            <h2 class="text-4xl font-bold text-slate-900 mb-6">The Shift to Intelligent Agents</h2>
+            <p class="text-lg text-slate-600 leading-relaxed">
+                Before diving into the advanced steps, it's critical to understand the paradigm shift. Traditional bots relied on hardcoded decision trees. Modern agents leverage generative AI to process information dynamically, executing complex actions autonomously while retaining memory and context.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center glass-panel rounded-3xl p-8 md:p-12">
+            <div>
+                <h3 class="text-2xl font-bold text-slate-800 mb-6">Legacy vs. Generative Paradigms</h3>
+                <div class="space-y-6">
+                    <div class="flex items-start gap-4">
+                        <div class="text-3xl">🤖</div>
+                        <div>
+                            <h4 class="font-bold text-lg text-slate-900">Legacy Conversational Bots</h4>
+                            <p class="text-slate-600 mt-1">Rigid business process automation. Required developers to predict and hardcode every possible user path and response.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <div class="text-3xl">🧠</div>
+                        <div>
+                            <h4 class="font-bold text-lg text-teal-700">Modern Copilot Agents</h4>
+                            <p class="text-slate-600 mt-1">Dynamically grounded in enterprise data. Uses GenAI to interpret intent, search knowledge bases, and execute tools autonomously.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+                <h4 class="text-center text-sm font-bold text-slate-400 uppercase tracking-widest mb-4">Capability Comparison</h4>
+                <div class="chart-container">
+                    <canvas id="evolutionChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section: Core Architecture Overview -->
+    <section id="architecture" class="scroll-mt-32">
+        <div class="max-w-3xl mx-auto text-center mb-16">
+            <h2 class="text-4xl font-bold text-slate-900 mb-6">Grounding and Action</h2>
+            <p class="text-lg text-slate-600 leading-relaxed">
+                An advanced intelligent agent is only as powerful as the data it accesses and the actions it executes. It natively binds to enterprise knowledge repositories and utilizes thousands of APIs to execute real-world tasks on behalf of the user.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="glass-panel rounded-3xl p-8 flex flex-col h-full">
+                <div class="text-4xl mb-4">🗄️</div>
+                <h3 class="text-2xl font-bold text-slate-800 mb-4">Enterprise Knowledge Sources</h3>
+                <p class="text-slate-600 mb-8 flex-grow">Generative AI needs truth to function without hallucination. Copilot Studio integrates tightly with your ecosystem to pull answers instantly.</p>
+                <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100">
+                    <div class="chart-container" style="height: 300px;">
+                        <canvas id="knowledgeChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-panel rounded-3xl p-8 flex flex-col h-full bg-gradient-to-br from-white to-slate-50 border-teal-100">
+                <div class="text-4xl mb-4">⚡</div>
+                <h3 class="text-2xl font-bold text-slate-800 mb-4">The Connector Ecosystem</h3>
+                <p class="text-slate-600 mb-8">Information retrieval is just the baseline. True power lies in executing triggers across thousands of business applications.</p>
+                
+                <div class="flex-grow flex flex-col justify-center items-center text-center space-y-8">
+                    <div>
+                        <div class="text-6xl font-black gradient-text mb-2">1,400+</div>
+                        <div class="text-sm font-bold text-slate-500 uppercase tracking-widest">Out-of-the-Box Connectors</div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 w-full">
+                        <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 text-center">
+                            <div class="text-2xl mb-1">🔗</div>
+                            <div class="font-bold text-slate-800 text-sm">Custom APIs</div>
+                        </div>
+                        <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 text-center">
+                            <div class="text-2xl mb-1">🔄</div>
+                            <div class="font-bold text-slate-800 text-sm">Power Automate</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW SECTION: 14 Steps to Mastery -->
+    <section id="mastery" class="scroll-mt-32">
+        <div class="max-w-3xl mx-auto text-center mb-12">
+            <h2 class="text-4xl font-bold text-slate-900 mb-6">14 Steps to Mastery</h2>
+            <p class="text-lg text-slate-600 leading-relaxed">
+                Follow this comprehensive outline for building advanced agents. We will construct a realistic <strong>IT Support Assistant</strong> capable of answering FAQs, executing password resets via connectors, and orchestrating child agents.
+            </p>
+        </div>
+
+        <div class="glass-panel rounded-3xl p-6 md:p-8">
+            <div class="flex flex-col lg:flex-row gap-8">
+                
+                <!-- Sidebar Menu (14 Steps) -->
+                <div class="lg:w-1/3 flex flex-col gap-1 max-h-[600px] overflow-y-auto pr-4 custom-scrollbar" id="step-menu">
+                    <!-- Steps generated below. The first is active. -->
+                    <button class="step-nav-btn active text-left px-5 py-4 rounded-xl font-semibold text-sm transition-all text-slate-500 hover:text-slate-800" data-target="step-1">
+                        <span class="text-teal-600 mr-2 font-bold">01.</span> Introduction & Session Goals
+                    </button>
+                    <button class="step-nav-btn text-left px-5 py-4 rounded-xl font-semibold text-sm transition-all text-slate-500 hover:text-slate-800" data-target="step-2">
+                        <span class="text-teal-600 mr-2 font-bold">02.</span> Quick Recap of 101
+                    </button>
+                    <button class="step-nav-btn text-left px-5 py-4 rounded-xl font-semibold text-sm transition-all text-slate-500 hover:text-slate-800" data-target="step-3">
+                        <span class="text-teal-600 mr-2 font-bold">03.</span> Advanced Capabilities
+                    </button>
+                    <button class="step-nav-btn text-left px-5 py-4 rounded-xl font-semibold text-sm transition-all text-slate-500 hover:text-slate-800" data-target="step-4">
+                        <span class="text-teal-600 mr-2 font-bold">04.</span> Designing the Advanced Agent
+                    </button>
+                    <button class="step-nav-btn text-left px-5 py-4 rounded-xl font-semibold text-sm transition-all text-slate-500 hover:text-slate-800" data-target="step-5">
+                        <span class="text-teal-600 mr-2 font-bold">05.</span> Agent Setup & Instructions
+                    </button>
+                    <button class="step-nav-btn text-left px-5 py-4 rounded-xl font-semibold text-sm transition-all text-slate-500 hover:text-slate-800" data-target="step-6">
+                        <span class="text-teal-600 mr-2 font-bold">06.</span> Adding Knowledge Sources
+                    </button>
+                    <button class="step-nav-btn text-left px-5 py-4 rounded-xl font-semibold text-sm transition-all text-slate-500 hover:text-slate-800" data-target="step-7">
+                        <span class="text-teal-600 mr-2 font-bold">07.</span> Integrating Advanced Tools
+                    </button>
+                    <button class="step-nav-btn text-left px-5 py-4 rounded-xl font-semibold text-sm transition-all text-slate-500 hover:text-slate-800" data-target="step-8">
+                        <span class="text-teal-600 mr-2 font-bold">08.</span> Custom Topics & Triggers
+                    </button>
+                    <button class="step-nav-btn text-left px-5 py-4 rounded-xl font-semibold text-sm transition-all text-slate-500 hover:text-slate-800" data-target="step-9">
+                        <span class="text-teal-600 mr-2 font-bold">09.</span> Using Variables (Memory)
+                    </button>
+                    <button class="step-nav-btn text-left px-5 py-4 rounded-xl font-semibold text-sm transition-all text-slate-500 hover:text-slate-800" data-target="step-10">
+                        <span class="text-teal-600 mr-2 font-bold">10.</span> Child Agent Modular Design
+                    </button>
+                    <button class="step-nav-btn text-left px-5 py-4 rounded-xl font-semibold text-sm transition-all text-slate-500 hover:text-slate-800" data-target="step-11">
+                        <span class="text-teal-600 mr-2 font-bold">11.</span> Testing & Channel Deployment
+                    </button>
+                    <button class="step-nav-btn text-left px-5 py-4 rounded-xl font-semibold text-sm transition-all text-slate-500 hover:text-slate-800" data-target="step-12">
+                        <span class="text-teal-600 mr-2 font-bold">12.</span> Agent Analytics & Monitoring
+                    </button>
+                    <button class="step-nav-btn text-left px-5 py-4 rounded-xl font-semibold text-sm transition-all text-slate-500 hover:text-slate-800" data-target="step-13">
+                        <span class="text-teal-600 mr-2 font-bold">13.</span> Best Practices & Next Steps
+                    </button>
+                    <button class="step-nav-btn text-left px-5 py-4 rounded-xl font-semibold text-sm transition-all text-slate-500 hover:text-slate-800" data-target="step-14">
+                        <span class="text-teal-600 mr-2 font-bold">14.</span> Q&A and Conclusion
+                    </button>
+                </div>
+
+                <!-- Content Area -->
+                <div class="lg:w-2/3 bg-white rounded-2xl p-8 shadow-sm border border-slate-100 min-h-[500px] flex flex-col justify-center">
+                    
+                    <div id="step-1" class="step-content active">
+                        <div class="text-5xl mb-6">🎯</div>
+                        <h3 class="text-3xl font-bold text-slate-800 mb-4">Introduction & Session Goals</h3>
+                        <p class="text-lg text-slate-600 mb-4">Welcome to the advanced Copilot Studio masterclass. The objective of this phase is to set the stage for exploring features that go far beyond standard conversational bots.</p>
+                        <ul class="space-y-3 text-slate-700">
+                            <li class="flex items-start gap-3"><span class="text-teal-500 font-bold mt-0.5">✓</span> <span>Understand the core objectives of building autonomous, task-executing agents.</span></li>
+                            <li class="flex items-start gap-3"><span class="text-teal-500 font-bold mt-0.5">✓</span> <span>Prepare for a deep dive into variables, state management, and multi-agent systems.</span></li>
+                        </ul>
+                    </div>
+
+                    <div id="step-2" class="step-content">
+                        <div class="text-5xl mb-6">📚</div>
+                        <h3 class="text-3xl font-bold text-slate-800 mb-4">Quick Recap of 101</h3>
+                        <p class="text-lg text-slate-600 mb-4">A brief refresh on the fundamental concepts required before tackling advanced architectures.</p>
+                        <ul class="space-y-3 text-slate-700">
+                            <li class="flex items-start gap-3"><span class="text-teal-500 font-bold mt-0.5">✓</span> <span><strong>Agent Types:</strong> The difference between Retrieval (Q&A), Task-based (Action), and fully Autonomous agents.</span></li>
+                            <li class="flex items-start gap-3"><span class="text-teal-500 font-bold mt-0.5">✓</span> <span><strong>Studio vs. Light:</strong> Understanding why the full Copilot Studio is required for enterprise development compared to Copilot Studio Light (declarative only).</span></li>
+                            <li class="flex items-start gap-3"><span class="text-teal-500 font-bold mt-0.5">✓</span> <span><strong>Major Components:</strong> Topics, Knowledge bases, and Tools.</span></li>
+                        </ul>
+                    </div>
+
+                    <div id="step-3" class="step-content">
+                        <div class="text-5xl mb-6">🚀</div>
+                        <h3 class="text-3xl font-bold text-slate-800 mb-4">Advanced Capabilities Overview</h3>
+                        <p class="text-lg text-slate-600 mb-4">Moving beyond basic setups, we will utilize features designed to handle complex, real-world business logic.</p>
+                        <ul class="space-y-3 text-slate-700">
+                            <li class="flex items-start gap-3"><span class="text-teal-500 font-bold mt-0.5">✓</span> <span><strong>Advanced Topics:</strong> Custom orchestrations and complex condition flows.</span></li>
+                            <li class="flex items-start gap-3"><span class="text-teal-500 font-bold mt-0.5">✓</span> <span><strong>Tools Expansion:</strong> Incorporating Power Automate flows, deep connector integrations, and custom prompts.</span></li>
+                            <li class="flex items-start gap-3"><span class="text-teal-500 font-bold mt-0.5">✓</span> <span><strong>State & Architecture:</strong> Variables for conversational memory and Child/Connected agents for modular design.</span></li>
+                        </ul>
+                    </div>
+
+                    <div id="step-4" class="step-content">
+                        <div class="text-5xl mb-6">📐</div>
+                        <h3 class="text-3xl font-bold text-slate-800 mb-4">Designing the Advanced Agent</h3>
+                        <p class="text-lg text-slate-600 mb-4">We frame our technical work around a concrete use case: an <strong>IT Support Assistant</strong>. This scenario perfectly highlights multi-turn logic.</p>
+                        <ul class="space-y-3 text-slate-700">
+                            <li class="flex items-start gap-3"><span class="text-teal-500 font-bold mt-0.5">✓</span> <span><strong>Information Retrieval:</strong> Answer IT FAQs directly from internal documentation.</span></li>
+                            <li class="flex items-start gap-3"><span class="text-teal-500 font-bold mt-0.5">✓</span> <span><strong>Task Automation:</strong> Perform secure actions like resetting a password via backend connectors.</span></li>
+                            <li class="flex items-start gap-3"><span class="text-teal-500 font-bold mt-0.5">✓</span> <span><strong>Memory:</strong> Demonstrate multi-turn memory to reduce repetition and resolve issues faster, lowering helpdesk ticket volumes.</span></li>
+                        </ul>
+                    </div>
+
+                    <div id="step-5" class="step-content">
+                        <div class="text-5xl mb-6">⚙️</div>
+                        <h3 class="text-3xl font-bold text-slate-800 mb-4">Agent Setup & Instructions</h3>
+                        <p class="text-lg text-slate-600 mb-4">The physical creation step. We configure the core identity and guardrails of the IT Support Assistant.</p>
+                        <ul class="space-y-3 text-slate-700">
+                            <li class="flex items-start gap-3"><span class="text-teal-500 font-bold mt-0.5">✓</span> <span><strong>Agent Instructions:</strong> Defining the persona (e.g., <em>"You are an autonomous IT Support Assistant..."</em>).</span></li>
+                            <li class="flex items-start gap-3"><span class="text-teal-500 font-bold mt-0.5">✓</span> <span><strong>Model Selection:</strong> Ensuring the correct LLM (like GPT-4) is selected for high fidelity.</span></li>
+                            <li class="flex items-start gap-3"><span class="text-teal-500 font-bold mt-0.5">✓</span> <span><strong>Guardrails:</strong> Turning off general web knowledge to ensure responses are strictly grounded in enterprise data.</span></li>
+                        </ul>
+                    </div>
+
+                    <div id="step-6" class="step-content">
+                        <div class="text-5xl mb-6">📂</div>
+                        <h3 class="text-3xl font-bold text-slate-800 mb-4">Adding Knowledge Sources</h3>
+                        <p class="text-lg text-slate-600 mb-4">Giving the agent a "brain" by connecting it to trusted internal enterprise data repositories.</p>
+                        <ul class="space-y-3 text-slate-700">
+                            <li class="flex items-start gap-3"><span class="text-teal-500 font-bold mt-0.5">✓</span> <span><strong>Grounding:</strong> Connect to IT helpdesk FAQ documents, SharePoint sites, and internal policy PDFs.</span></li>
+                            <li class="flex items-start gap-3"><span class="text-teal-500 font-bold mt-0.5">✓</span> <span><strong>Indexing:</strong> Copilot Studio automatically indexes these files to construct a secure RAG (Retrieval-Augmented Generation) pipeline.</span></li>
+                            <li class="flex items-start gap-3"><span class="text-teal-500 font-bold mt-0.5">✓</span> <span><strong>No Hallucinations:</strong> By restricting search to these sources, we guarantee accurate, cited answers.</span></li>
+                        </ul>
+                    </div>
+
+                    <div id="step-7" class="step-content">
+                        <div class="text-5xl mb-6">🔌</div>
+                        <h3 class="text-3xl font-bold text-slate-800 mb-4">Integrating Advanced Tools</h3>
+                        <p class="text-lg text-slate-600 mb-4">Transitioning the agent from a search engine into a worker capable of executing digital tasks.</p>
+                        <ul class="space-y-3 text-slate-700">
+                            <li class="flex items-start gap-3"><span class="text-teal-500 font-bold mt-0.5">✓</span> <span><strong>Action Connectors:</strong> Adding a Power Automate flow to handle secure password resets or ServiceNow ticket creation.</span></li>
+                            <li class="flex items-start gap-3"><span class="text-teal-500 font-bold mt-0.5">✓</span> <span><strong>Configuration:</strong> Mapping required inputs (like username) and outputs securely.</span></li>
+                            <li class="flex items-start gap-3"><span class="text-teal-500 font-bold mt-0.5">✓</span> <span><strong>Authentication:</strong> Determining between maker-level vs. user-level authentication for the API execution.</span></li>
+                        </ul>
+                    </div>
+
+                    <div id="step-8" class="step-content">
+                        <div class="text-5xl mb-6">🛤️</div>
+                        <h3 class="text-3xl font-bold text-slate-800 mb-4">Custom Topics & Triggers</h3>
+                        <p class="text-lg text-slate-600 mb-4">Building a structured, highly controlled conversation path for sensitive operations like resetting a password.</p>
+                        <ul class="space-y-3 text-slate-700">
+                            <li class="flex items-start gap-3"><span class="text-teal-500 font-bold mt-0.5">✓</span> <span><strong>Advanced Authoring:</strong> Creating a "Password Reset Request" topic via the advanced canvas.</span></li>
+                            <li class="flex items-start gap-3"><span class="text-teal-500 font-bold mt-0.5">✓</span> <span><strong>Intent Triggers:</strong> Launching the flow automatically when phrases like "reset my password" are detected.</span></li>
+                            <li class="flex items-start gap-3"><span class="text-teal-500 font-bold mt-0.5">✓</span> <span><strong>Logic Nodes:</strong> Using "Ask a question" nodes to gather required info and applying condition nodes for logical branching.</span></li>
+                        </ul>
+                    </div>
+
+                    <div id="step-9" class="step-content">
+                        <div class="text-5xl mb-6">🧠</div>
+                        <h3 class="text-3xl font-bold text-slate-800 mb-4">Using Variables (Memory)</h3>
+                        <p class="text-lg text-slate-600 mb-4">State management is crucial for a natural conversation. Variables allow the agent to remember context.</p>
+                        <ul class="space-y-3 text-slate-700">
+                            <li class="flex items-start gap-3"><span class="text-teal-500 font-bold mt-0.5">✓</span> <span><strong>Data Storage:</strong> Storing the user's provided email or employee ID into variables.</span></li>
+                            <li class="flex items-start gap-3"><span class="text-teal-500 font-bold mt-0.5">✓</span> <span><strong>Scoping:</strong> Understanding the difference between Topic-level (temporary) and Global (cross-topic/session) variables.</span></li>
+                            <li class="flex items-start gap-3"><span class="text-teal-500 font-bold mt-0.5">✓</span> <span><strong>Continuity:</strong> Reusing stored variables later in the flow to avoid repetitively asking the user for the same information.</span></li>
+                        </ul>
+                    </div>
+
+                    <div id="step-10" class="step-content">
+                        <div class="text-5xl mb-6">🧩</div>
+                        <h3 class="text-3xl font-bold text-slate-800 mb-4">Child Agent Modular Design</h3>
+                        <p class="text-lg text-slate-600 mb-4">As solutions grow, organizing them into specialized modular components becomes necessary for maintenance and scaling.</p>
+                        <ul class="space-y-3 text-slate-700">
+                            <li class="flex items-start gap-3"><span class="text-teal-500 font-bold mt-0.5">✓</span> <span><strong>Specialization:</strong> Creating a dedicated "Security Policy Advisor" sub-agent containing niche knowledge.</span></li>
+                            <li class="flex items-start gap-3"><span class="text-teal-500 font-bold mt-0.5">✓</span> <span><strong>Delegation:</strong> The primary IT Support Agent can orchestrate and route specific queries to the child agent.</span></li>
+                            <li class="flex items-start gap-3"><span class="text-teal-500 font-bold mt-0.5">✓</span> <span><strong>Child vs. Connected:</strong> Understanding why embedded Child Agents differ from external standalone Connected Agents.</span></li>
+                        </ul>
+                    </div>
+
+                    <div id="step-11" class="step-content">
+                        <div class="text-5xl mb-6">🌐</div>
+                        <h3 class="text-3xl font-bold text-slate-800 mb-4">Testing & Channel Deployment</h3>
+                        <p class="text-lg text-slate-600 mb-4">Validating the logic and pushing the agent to the platforms where users actually work.</p>
+                        <ul class="space-y-3 text-slate-700">
+                            <li class="flex items-start gap-3"><span class="text-teal-500 font-bold mt-0.5">✓</span> <span><strong>Canvas Testing:</strong> Running a test conversation, simulating an FAQ retrieval followed by the complex password reset topic.</span></li>
+                            <li class="flex items-start gap-3"><span class="text-teal-500 font-bold mt-0.5">✓</span> <span><strong>Publishing:</strong> Deploying the finalized agent out to Microsoft Teams.</span></li>
+                            <li class="flex items-start gap-3"><span class="text-teal-500 font-bold mt-0.5">✓</span> <span><strong>Authentication:</strong> Leveraging Single Sign-On (Entra ID) for seamless access within organizational channels.</span></li>
+                        </ul>
+                    </div>
+
+                    <div id="step-12" class="step-content">
+                        <div class="text-5xl mb-6">📊</div>
+                        <h3 class="text-3xl font-bold text-slate-800 mb-4">Agent Analytics & Monitoring</h3>
+                        <p class="text-lg text-slate-600 mb-4">Deployment is just the beginning. Continuous improvement requires deep visibility into operational metrics.</p>
+                        <ul class="space-y-3 text-slate-700">
+                            <li class="flex items-start gap-3"><span class="text-teal-500 font-bold mt-0.5">✓</span> <span><strong>Dashboard Review:</strong> Tracking session volumes, resolution rates, and user satisfaction signals.</span></li>
+                            <li class="flex items-start gap-3"><span class="text-teal-500 font-bold mt-0.5">✓</span> <span><strong>Tool Frequency:</strong> Understanding which integrated tools are being called the most.</span></li>
+                            <li class="flex items-start gap-3"><span class="text-teal-500 font-bold mt-0.5">✓</span> <span><strong>Iteration:</strong> Using insights to tweak knowledge sources, adjust prompts, and improve topic pathways.</span></li>
+                        </ul>
+                    </div>
+
+                    <div id="step-13" class="step-content">
+                        <div class="text-5xl mb-6">🏆</div>
+                        <h3 class="text-3xl font-bold text-slate-800 mb-4">Best Practices & Next Steps</h3>
+                        <p class="text-lg text-slate-600 mb-4">A synthesis of the core principles that govern successful, enterprise-scale Copilot implementations.</p>
+                        <ul class="space-y-3 text-slate-700">
+                            <li class="flex items-start gap-3"><span class="text-teal-500 font-bold mt-0.5">✓</span> <span><strong>Architecture:</strong> Always use structured topics for complex workflows and rely on connectors to execute real actions.</span></li>
+                            <li class="flex items-start gap-3"><span class="text-teal-500 font-bold mt-0.5">✓</span> <span><strong>Modularity:</strong> Manage conversation state with variables and compartmentalize logic using child agents.</span></li>
+                            <li class="flex items-start gap-3"><span class="text-teal-500 font-bold mt-0.5">✓</span> <span><strong>Governance:</strong> Maintain strict content controls and test thoroughly for AI safety.</span></li>
+                        </ul>
+                    </div>
+
+                    <div id="step-14" class="step-content">
+                        <div class="text-5xl mb-6">🎤</div>
+                        <h3 class="text-3xl font-bold text-slate-800 mb-4">Q&A and Conclusion</h3>
+                        <p class="text-lg text-slate-600 mb-4">The final wrap-up of the advanced concepts demonstrated throughout the masterclass.</p>
+                        <ul class="space-y-3 text-slate-700">
+                            <li class="flex items-start gap-3"><span class="text-teal-500 font-bold mt-0.5">✓</span> <span><strong>Value Proposition:</strong> Reiterate that these advanced features transform simple bots into powerful, enterprise-ready assistants.</span></li>
+                            <li class="flex items-start gap-3"><span class="text-teal-500 font-bold mt-0.5">✓</span> <span><strong>Business Impact:</strong> Comprehending context and executing tasks natively drives massive organizational efficiency.</span></li>
+                            <li class="flex items-start gap-3"><span class="text-teal-500 font-bold mt-0.5">✓</span> <span><strong>Open Floor:</strong> Reviewing the reference materials and opening the session for final technical questions.</span></li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section: Governance Pipeline -->
+    <section id="governance" class="scroll-mt-32">
+        <div class="max-w-3xl mx-auto text-center mb-16">
+            <h2 class="text-4xl font-bold text-slate-900 mb-6">Enterprise Governance & Auditing</h2>
+            <p class="text-lg text-slate-600 leading-relaxed">
+                Implementing AI securely requires robust tracking. Copilot Studio provides exhaustive audit logging via Microsoft Purview, capturing bot component updates and user interactions. Extracting deep historical data is an asynchronous process due to massive data volumes.
+            </p>
+        </div>
+
+        <div class="glass-panel rounded-3xl p-8 md:p-12 relative overflow-hidden">
+            <div class="absolute top-0 right-0 p-8 text-8xl opacity-5">🛡️</div>
+            <h3 class="text-2xl font-bold text-slate-800 mb-10 text-center">The Asynchronous Audit Extraction Pipeline</h3>
+            
+            <div class="max-w-4xl mx-auto relative">
+                <div class="hidden md:block absolute left-1/2 top-0 bottom-0 w-1 bg-slate-200 -translate-x-1/2"></div>
+                
+                <div class="flex flex-col space-y-8 relative z-10">
+                    
+                    <div class="flex flex-col md:flex-row items-center justify-between w-full">
+                        <div class="w-full md:w-5/12 mb-4 md:mb-0">
+                            <div class="bg-white p-6 rounded-2xl shadow-md border-l-4 border-slate-400 text-right">
+                                <h4 class="font-bold text-slate-800">Event Occurs</h4>
+                                <p class="text-sm text-slate-500 mt-1">Bot component updated or conversation logged in the system.</p>
+                            </div>
+                        </div>
+                        <div class="w-10 h-10 bg-slate-800 rounded-full border-4 border-white flex items-center justify-center shadow-lg z-10 text-white font-bold text-xs">1</div>
+                        <div class="w-full md:w-5/12"></div>
+                    </div>
+
+                    <div class="flex flex-col md:flex-row items-center justify-between w-full">
+                        <div class="w-full md:w-5/12 order-3 md:order-1"></div>
+                        <div class="w-10 h-10 bg-teal-500 rounded-full border-4 border-white flex items-center justify-center shadow-lg z-10 text-white font-bold text-xs order-2">2</div>
+                        <div class="w-full md:w-5/12 mb-4 md:mb-0 order-1 md:order-3">
+                            <div class="bg-white p-6 rounded-2xl shadow-md border-l-4 border-teal-500">
+                                <h4 class="font-bold text-slate-800">Admin Request</h4>
+                                <p class="text-sm text-slate-500 mt-1">Administrator requests a comprehensive audit log report from the Purview portal.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col md:flex-row items-center justify-between w-full">
+                        <div class="w-full md:w-5/12 mb-4 md:mb-0">
+                            <div class="bg-amber-50 p-6 rounded-2xl shadow-md border-l-4 border-amber-500 text-right relative overflow-hidden">
+                                <div class="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.2)_50%,transparent_75%)] bg-[length:250%_250%,100%_100%] animate-[shimmer_2s_infinite]"></div>
+                                <h4 class="font-bold text-amber-800">Batch Processing Queue</h4>
+                                <p class="text-sm text-amber-700 mt-1 font-semibold">STATUS: In Progress / Queued</p>
+                                <p class="text-xs text-amber-600 mt-2">Data is batched. The extraction process can take <span class="font-bold bg-amber-200 px-1 rounded text-amber-900">over 3 hours</span> to compile.</p>
+                            </div>
+                        </div>
+                        <div class="w-10 h-10 bg-amber-500 rounded-full border-4 border-white flex items-center justify-center shadow-lg z-10 text-white font-bold text-xs">3</div>
+                        <div class="w-full md:w-5/12"></div>
+                    </div>
+
+                    <div class="flex flex-col md:flex-row items-center justify-between w-full">
+                        <div class="w-full md:w-5/12 order-3 md:order-1"></div>
+                        <div class="w-10 h-10 bg-emerald-500 rounded-full border-4 border-white flex items-center justify-center shadow-lg z-10 text-white font-bold text-xs order-2">4</div>
+                        <div class="w-full md:w-5/12 mb-4 md:mb-0 order-1 md:order-3">
+                            <div class="bg-white p-6 rounded-2xl shadow-md border-l-4 border-emerald-500">
+                                <h4 class="font-bold text-slate-800">Log Availability</h4>
+                                <p class="text-sm text-slate-500 mt-1">Full dataset returned allowing admin to scroll through all historical events since inception.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+            <style>
+                @keyframes shimmer {
+                    0% { background-position: 200% 0; }
+                    100% { background-position: -200% 0; }
+                }
+            </style>
+        </div>
+    </section>
+
+</main>
+
+<footer class="bg-slate-900 text-slate-400 py-12 text-center border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-6">
+        <p class="font-semibold text-slate-300 mb-2">Copilot Studio Advanced Masterclass Interactive Report</p>
+        <p class="text-sm mb-6">Generated based on the provided session outline and transcripts.</p>
+        <div class="flex justify-center space-x-6 text-2xl">
+            <span title="Data Driven">📊</span>
+            <span title="AI Powered">🧠</span>
+            <span title="Secure">🛡️</span>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Label wrapping logic for Chart.js
+    function wrapLabel(label) {
+        if (label.length <= 16) return label;
+        const words = label.split(' ');
+        const lines = [];
+        let currentLine = '';
+        words.forEach(word => {
+            if ((currentLine + word).length > 16) {
+                if (currentLine) lines.push(currentLine.trim());
+                currentLine = word + ' ';
+            } else {
+                currentLine += word + ' ';
+            }
+        });
+        if (currentLine) lines.push(currentLine.trim());
+        return lines;
+    }
+
+    const standardTooltipConfig = {
+        callbacks: {
+            title: function(tooltipItems) {
+                const item = tooltipItems[0];
+                let label = item.chart.data.labels[item.dataIndex];
+                if (Array.isArray(label)) {
+                    return label.join(' ');
+                } else {
+                    return label;
+                }
+            }
+        }
+    };
+
+    Chart.defaults.font.family = 'Inter, sans-serif';
+    Chart.defaults.color = '#64748b';
+
+    // Radar Chart: Evolution
+    const radarCtx = document.getElementById('evolutionChart').getContext('2d');
+    const radarLabelsRaw = ['Setup Speed', 'Rigid Control', 'Dynamic GenAI', 'Action Integration', 'Maintenance Ease'];
+    const radarLabels = radarLabelsRaw.map(wrapLabel);
+    
+    new Chart(radarCtx, {
+        type: 'radar',
+        data: {
+            labels: radarLabels,
+            datasets: [
+                {
+                    label: 'Legacy Bots',
+                    data: [80, 95, 10, 40, 20],
+                    backgroundColor: 'rgba(100, 116, 139, 0.2)',
+                    borderColor: '#64748b',
+                    pointBackgroundColor: '#64748b',
+                    borderWidth: 2
+                },
+                {
+                    label: 'Modern Copilots',
+                    data: [90, 40, 100, 95, 85],
+                    backgroundColor: 'rgba(13, 148, 136, 0.2)',
+                    borderColor: '#0d9488',
+                    pointBackgroundColor: '#0d9488',
+                    borderWidth: 2
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                r: {
+                    angleLines: { color: 'rgba(0,0,0,0.05)' },
+                    grid: { color: 'rgba(0,0,0,0.05)' },
+                    pointLabels: { font: { size: 12, weight: '600' }, color: '#334155' },
+                    ticks: { display: false, min: 0, max: 100 }
+                }
+            },
+            plugins: {
+                legend: { position: 'bottom', labels: { padding: 20, usePointStyle: true } },
+                tooltip: standardTooltipConfig
+            }
+        }
+    });
+
+    // Doughnut Chart: Knowledge
+    const donutCtx = document.getElementById('knowledgeChart').getContext('2d');
+    const donutLabelsRaw = ['SharePoint & OneDrive', 'Dataverse Tables', 'Public Web Domains'];
+    const donutLabels = donutLabelsRaw.map(wrapLabel);
+
+    new Chart(donutCtx, {
+        type: 'doughnut',
+        data: {
+            labels: donutLabels,
+            datasets: [{
+                data: [45, 35, 20],
+                backgroundColor: ['#0d9488', '#2563eb', '#cbd5e1'],
+                borderWidth: 0,
+                hoverOffset: 10
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '75%',
+            plugins: {
+                legend: { position: 'right', labels: { usePointStyle: true, padding: 20 } },
+                tooltip: standardTooltipConfig
+            }
+        }
+    });
+
+    // JS Logic for the 14 Steps Tab Menu
+    const navButtons = document.querySelectorAll('.step-nav-btn');
+    const stepContents = document.querySelectorAll('.step-content');
+
+    navButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Remove active states from all buttons
+            navButtons.forEach(btn => {
+                btn.classList.remove('active', 'bg-teal-50', 'text-slate-800');
+                btn.classList.add('text-slate-500');
+            });
+            
+            // Add active state to clicked button
+            button.classList.remove('text-slate-500');
+            button.classList.add('active', 'bg-teal-50', 'text-slate-800');
+
+            // Hide all content panes
+            stepContents.forEach(content => content.classList.remove('active'));
+            
+            // Show the target content pane
+            const targetId = button.getAttribute('data-target');
+            document.getElementById(targetId).classList.add('active');
+        });
+    });
+</script>
+</body>
+</html>
