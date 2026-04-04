@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BDO Training & Adoption | Advanced Copilot Studio Guide</title>
+    <title>BDO | Mastering the CoPilot Ecosystem</title>
     
     <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -19,9 +19,9 @@
                         sans: ['"Trebuchet MS"', 'sans-serif'],
                     },
                     colors: {
-                        bdo: {
+                        brand: {
                             red: '#EC1D24',
-                            darkRed: '#c41219',
+                            dark: '#0f172a',
                         }
                     }
                 }
@@ -30,79 +30,91 @@
     </script>
 
     <style>
-        /* Custom scrollbar for a polished look */
+        /* Custom scrollbar */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #0f172a; }
         ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #EC1D24; }
         
-        .bdo-gradient-text {
+        .brand-gradient-text {
             background: linear-gradient(to right, #EC1D24, #f87171);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        /* Smooth transitions for content switching */
         .step-transition {
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
+
+        .agenda-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(236, 29, 36, 0.4);
+            background-color: rgba(30, 41, 59, 0.8);
+        }
+        
+        .content-scroll {
+            max-height: 500px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
     </style>
 </head>
-<body class="min-h-screen bg-slate-900 text-slate-100 font-sans selection:bg-bdo-red selection:text-white">
+<body class="min-h-screen bg-slate-900 text-slate-100 font-sans selection:bg-brand-red selection:text-white">
 
     <!-- Header / Hero Section -->
     <header class="relative overflow-hidden border-b border-slate-800 bg-slate-950 pt-16 pb-20">
-        <!-- BDO Themed Glow -->
-        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-[400px] bg-bdo-red/10 blur-[120px] rounded-full pointer-events-none"></div>
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-[400px] bg-brand-red/10 blur-[120px] rounded-full pointer-events-none"></div>
         
         <div class="max-w-6xl mx-auto px-6 relative z-10">
             <div class="flex items-center gap-4 md:gap-6 mb-12">
                 <img src="https://raw.githubusercontent.com/jerseyitguy/CopilotStudioCourse/main/bdo-white.png" alt="BDO Logo" class="h-8 md:h-10 w-auto" onerror="this.src='https://via.placeholder.com/150x50/EC1D24/FFFFFF?text=BDO+LOGO'">
                 <div class="h-6 w-px bg-slate-700"></div>
-                <span class="text-lg md:text-xl font-semibold tracking-tight text-slate-300">Training & Adoption</span>
+                <span class="text-lg md:text-xl font-semibold tracking-tight text-slate-300 uppercase tracking-widest text-sm">Training & Adoption</span>
             </div>
 
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-bdo-red/10 border border-bdo-red/20 text-bdo-red text-sm font-medium mb-6">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-red/10 border border-brand-red/20 text-brand-red text-xs font-bold uppercase tracking-widest mb-6">
                 <i data-lucide="sparkles" class="w-4 h-4"></i>
-                Session Companion Guide
+                Insight Session 6: Thursday 23rd April
             </div>
             <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6">
-                Advanced <br />
-                <span class="bdo-gradient-text">
-                    Copilot Studio
-                </span>
+                Mastering the <br />
+                <span class="brand-gradient-text">CoPilot Ecosystem</span>
             </h1>
             <p class="text-xl text-slate-400 max-w-2xl leading-relaxed">
-                A professional reference guide curated for BDO teams to bridge the gap between conversational AI and enterprise automation. Review core concepts and trace the interactive worked example.
+                Advanced workflows for M365 CoPilot. Moving beyond simple drafts to complex data analysis and real-world integration.
             </p>
         </div>
     </header>
 
-    <!-- Core Concepts Section -->
-    <section class="py-20 bg-slate-900 border-b border-slate-800">
+    <!-- Full Session Agenda Section -->
+    <section class="py-20 bg-slate-950 border-b border-slate-800">
         <div class="max-w-6xl mx-auto px-6">
-            <div class="flex items-center gap-3 mb-12">
-                <i data-lucide="brain-circuit" class="w-8 h-8 text-bdo-red"></i>
-                <h2 class="text-3xl font-bold">Beyond the Basics</h2>
+            <div class="flex items-center justify-between mb-12">
+                <div class="flex items-center gap-3">
+                    <i data-lucide="list-checks" class="w-8 h-8 text-brand-red"></i>
+                    <h2 class="text-3xl font-bold">Session Curriculum</h2>
+                </div>
+                <span class="text-slate-500 text-sm font-mono uppercase">13 Core Modules</span>
             </div>
-            <div id="concepts-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            
+            <div id="agenda-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 <!-- Populated by JS -->
             </div>
         </div>
     </section>
 
     <!-- Interactive Walkthrough Section -->
-    <section class="py-24 bg-slate-950 relative">
-        <div class="absolute right-0 top-1/4 w-96 h-96 bg-bdo-red/5 blur-[100px] rounded-full pointer-events-none"></div>
+    <section class="py-24 bg-slate-900 relative">
+        <div class="absolute right-0 top-1/4 w-96 h-96 bg-brand-red/5 blur-[100px] rounded-full pointer-events-none"></div>
         
         <div class="max-w-6xl mx-auto px-6">
             <div class="mb-16 max-w-3xl">
                 <div class="flex items-center gap-3 mb-4">
-                    <i data-lucide="blocks" class="w-8 h-8 text-bdo-red"></i>
-                    <h2 class="text-4xl font-bold">The IT Support Assistant</h2>
+                    <i data-lucide="microscope" class="w-8 h-8 text-brand-red"></i>
+                    <h2 class="text-4xl font-bold uppercase tracking-tight">The IT Support Scenario</h2>
                 </div>
                 <p class="text-lg text-slate-400">
-                    Interactive Walkthrough: See how we combine Retrieval-Augmented Generation (RAG), Task execution, and autonomous logic to deflect routine IT helpdesk tickets within the BDO ecosystem.
+                    A concrete Worked Example: Designing a hypothetical IT Support agent that demonstrates retrieval, task automation, and autonomous logic for Jersey-based enterprises.
                 </p>
             </div>
 
@@ -114,12 +126,10 @@
 
                 <!-- Step Content Display -->
                 <div class="lg:w-2/3">
-                    <div class="bg-slate-900 border border-slate-700 rounded-3xl p-8 md:p-12 min-h-[500px] shadow-2xl relative overflow-hidden">
-                        <!-- Background decorative glow -->
-                        <div class="absolute -top-24 -right-24 w-64 h-64 bg-bdo-red/10 blur-[80px] rounded-full pointer-events-none"></div>
-                        
-                        <div id="step-content-inner" class="relative w-full h-full min-h-[400px]">
-                            <!-- Content blocks populated by JS -->
+                    <div class="bg-slate-950 border border-slate-800 rounded-3xl p-8 md:p-12 min-h-[600px] shadow-2xl relative overflow-hidden">
+                        <div class="absolute -top-24 -right-24 w-64 h-64 bg-brand-red/10 blur-[80px] rounded-full pointer-events-none"></div>
+                        <div id="step-content-inner" class="relative w-full h-full">
+                            <!-- Content populated by JS -->
                         </div>
                     </div>
                 </div>
@@ -128,14 +138,13 @@
     </section>
 
     <!-- Best Practices Section -->
-    <section class="py-20 bg-slate-900 border-t border-slate-800">
+    <section class="py-20 bg-slate-950 border-t border-slate-800">
         <div class="max-w-4xl mx-auto px-6">
             <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold mb-4">Golden Rules & Next Steps</h2>
-                <p class="text-slate-400">Essential principles for successful BDO digital transformation projects.</p>
+                <h2 class="text-3xl font-bold mb-4 uppercase tracking-wider">Takeaway Principles</h2>
+                <p class="text-slate-400">Expert-led golden rules for practical AI adoption and integration.</p>
             </div>
-            
-            <div id="practices-container" class="space-y-4">
+            <div id="practices-container" class="space-y-3">
                 <!-- Populated by JS -->
             </div>
         </div>
@@ -144,221 +153,197 @@
     <!-- Footer -->
     <footer class="bg-slate-950 py-16 border-t border-slate-800 text-center text-slate-500">
         <div class="flex flex-col items-center gap-6">
-            <img src="https://raw.githubusercontent.com/jerseyitguy/CopilotStudioCourse/main/bdo-white.png" alt="BDO Logo" class="h-8 opacity-50 grayscale hover:grayscale-0 transition-all duration-500" onerror="this.src='https://via.placeholder.com/100x30/FFFFFF/000000?text=BDO'">
+            <img src="https://raw.githubusercontent.com/jerseyitguy/CopilotStudioCourse/main/bdo-white.png" alt="BDO Logo" class="h-8 opacity-40 grayscale" onerror="this.src='https://via.placeholder.com/100x30/FFFFFF/000000?text=BDO'">
             <div class="flex justify-center items-center gap-2">
-                <i data-lucide="server" class="w-5 h-5"></i>
-                <span class="font-semibold tracking-wide uppercase text-xs">BDO Training & Adoption | Copilot Studio</span>
+                <i data-lucide="shield-check" class="w-5 h-5 text-brand-red"></i>
+                <span class="font-bold tracking-widest uppercase text-xs">Training & Adoption | 2026</span>
             </div>
-            <p class="text-sm max-w-md mx-auto">Refer to internal BDO SharePoint resources and Microsoft Learn Agent Labs for continued hands-on scenario practice.</p>
+            <p class="text-xs max-w-md mx-auto opacity-60">Workplace examples for real-world application in Jersey.</p>
         </div>
     </footer>
 
-    <!-- Application Logic -->
     <script>
         // --- DATA ---
-        const coreConcepts = [
-            {
-                title: "Advanced Topics & Triggers",
-                description: "Go beyond basic keyword matching. Use advanced conditions, event-driven triggers, and guided conversational nodes.",
-                icon: "message-square", colorClass: "text-red-400"
-            },
-            {
-                title: "Tool Integrations",
-                description: "Connect to 1,500+ Power Platform connectors, custom APIs, and Power Automate flows to execute real-world tasks.",
-                icon: "wrench", colorClass: "text-red-500"
-            },
-            {
-                title: "Conversation Memory",
-                description: "Utilize Global and Topic-level variables to remember user context, inputs, and preferences across the entire session.",
-                icon: "database", colorClass: "text-slate-300"
-            },
-            {
-                title: "Multi-Agent Orchestration",
-                description: "Design modular solutions by delegating specific domains to embedded Child Agents or external Connected Agents.",
-                icon: "network", colorClass: "text-red-600"
-            }
+        const agendaItems = [
+            { id: 1, title: "Intro & Goals", desc: "Welcome and session overview; defining objectives for the advanced track.", icon: "flag" },
+            { id: 2, title: "101 Recap", desc: "Agent types (Retrieval vs Task vs Autonomous), Studio vs Light, and core components.", icon: "history" },
+            { id: 3, title: "Advanced Capabilities", desc: "Orchestration, custom flows, variables, prompts, and modular multi-agent design.", icon: "zap" },
+            { id: 4, title: "Use Case: IT Support", desc: "Planning an agent to answer FAQs, reset passwords, and maintain session memory.", icon: "layout" },
+            { id: 5, title: "Setup & Instructions", desc: "Step 1: Creating the agent, defining instructions, and selecting the GPT-4 model.", icon: "settings" },
+            { id: 6, title: "Knowledge Sources", desc: "Step 2: Grounding with SharePoint/PDFs and ensuring data restriction to avoid hallucinations.", icon: "book-open" },
+            { id: 7, title: "Integrating Tools", desc: "Step 3: Connecting Power Automate and connectors (ServiceNow, custom APIs) for actions.", icon: "hammer" },
+            { id: 8, title: "Custom Topics", desc: "Step 4: Authoring multi-step interactions and triggers (e.g., Password Reset Request).", icon: "message-square" },
+            { id: 9, title: "Variables & Memory", desc: "Step 5: Implementing Topic-level vs. Global variables to persist data across topics.", icon: "database" },
+            { id: 10, title: "Child Agents", desc: "Step 6: Modular design using specialized child agents (e.g., Security Advisor).", icon: "git-branch" },
+            { id: 11, title: "Test & Deployment", desc: "Step 7: Built-in tester walkthrough and publishing to Teams with SSO.", icon: "send" },
+            { id: 12, title: "Analytics", desc: "Managing performance: tracking session volumes, resolution rates, and tool usage.", icon: "bar-chart-3" },
+            { id: 13, title: "Best Practices", desc: "Governance, AI safety, and resources for continued learning (Microsoft Labs).", icon: "award" }
         ];
 
         const steps = [
             {
                 id: 1,
-                title: "Agent Creation & Config",
-                icon: "bot",
-                content: "Create a new agent in Copilot Studio (Full). Provide a clear description and set detailed Agent Instructions defining its role (e.g., 'Autonomous IT helpdesk assistant'). Ensure generative answers are enabled, select a powerful GPT model, and disable general web knowledge to prevent hallucinations.",
-                tips: ["Use strict instructions for tone.", "Turn off 'Use general knowledge'."]
+                title: "Creation & Configuration",
+                icon: "settings",
+                content: "We create the 'IT Support Assistant' in the full Copilot Studio portal. In the Agent Instructions, we define the role: 'You are an autonomous IT helpdesk assistant... answer troubleshoot questions... initiate password reset procedures.' We select GPT-4 and, crucially, disable 'Use general knowledge' to force reliance on trusted enterprise data only.",
+                tips: ["Instructions define role, tone, and guardrails.", "GPT-4 ensures high-quality NLU and generation.", "Disabling general knowledge prevents hallucinations."]
             },
             {
                 id: 2,
-                title: "Adding Knowledge Sources",
+                title: "Knowledge Grounding",
                 icon: "book-open",
-                content: "Ground your agent with internal enterprise data. Add internal SharePoint sites (e.g., IT Support FAQs) or upload PDF documents (e.g., IT Handbook). Copilot Studio indexes this content, allowing the agent to answer questions using built-in Retrieval-Augmented Generation (RAG) with citations.",
-                tips: ["Verify SharePoint indexing via Microsoft Graph.", "Use high-quality, structured PDFs."]
+                content: "Add 'brains' by connecting SharePoint sites and uploading PDFs (Employee IT Handbooks). Copilot Studio uses a RAG pipeline: searching internal docs, summarizing answers, and providing citations. If a user asks 'How do I connect to VPN?', the agent retrieves steps directly from your internal setup guide.",
+                tips: ["Graph search indexes SharePoint automatically.", "RAG summarizes answers with source citations.", "Restrict to internal sources for technical accuracy."]
             },
             {
                 id: 3,
-                title: "Integrating Tools",
-                icon: "wrench",
-                content: "Transform your agent from a Q&A bot to a task executor. Add a Power Automate flow (e.g., 'Reset User Password') as a Tool. Define the tool's inputs (username) and outputs (success message), and configure authentication (Maker vs. User). Provide a clear description so the Copilot planner knows when to invoke it.",
-                tips: ["Write descriptive tool names.", "Map inputs to user variables cleanly."]
+                title: "Task Automation Tools",
+                icon: "hammer",
+                content: "Integrate a 'Reset User Password' Power Automate flow as a Tool. Provide a clear description (essential for the planner) and define inputs like 'Employee ID'. We use 'Maker authentication' for internal system actions, allowing the agent to execute backend directory resets triggered by natural language.",
+                tips: ["Tool descriptions help the agent's planner decide when to invoke it.", "1,500+ prebuilt connectors available.", "Inputs/Outputs bind UI variables to backend logic."]
             },
             {
                 id: 4,
-                title: "Custom Topics & Triggers",
+                title: "Topics & Advanced Triggers",
                 icon: "message-square",
-                content: "Build a structured multi-turn dialogue. Create a 'Password Reset Workflow' topic triggered by phrases like 'reset my password'. Use 'Ask a question' nodes to gather the User ID, followed by a confirmation node. Then, route the flow to a 'Call an action' node to execute the tool configured in Step 3.",
-                tips: ["Use phrase list triggers for variations.", "Add error handling branches."]
+                content: "Create a 'Password Reset Workflow' topic with a trigger phrase list ('reset my password', 'forgot login'). We use the authoring canvas to design a guided dialogue: Ask for User ID -> Confirm action -> Call Action (Tool) -> Send Confirmation Message. This gives the maker total control over sensitive transactions.",
+                tips: ["Advanced authoring mode = Turn-by-turn control.", "Triggers route the user into specific logic branches.", "Use 'Ask a question' nodes to fill required variables."]
             },
             {
                 id: 5,
-                title: "Using Variables (Memory)",
+                title: "Variables & Memory",
                 icon: "database",
-                content: "Maintain context throughout the chat. Save the extracted User ID into a Topic-level variable to pass into the password reset tool. If you need the ID across different topics, upgrade it to a Global variable. This prevents the agent from repetitively asking the user for the same information.",
-                tips: ["Topic variables = Local scope.", "Global variables = Session scope."]
+                content: "We store the UserID in a Topic-level variable for the reset flow. To persist data (like Email or Role) across the entire session, we upgrade them to Global Variables. This enables conversation memory: if a user later asks 'What did we just do?', the agent can recall the UserID and session context perfectly.",
+                tips: ["Topic Variables = Current workflow context.", "Global Variables = Cross-topic session memory.", "Variables carry state, avoiding repetitive questions."]
             },
             {
                 id: 6,
-                title: "Child Agent (Modular Design)",
-                icon: "network",
-                content: "Scale your architecture. Instead of one massive agent, create a child agent called 'Security Policy Advisor' with specialized knowledge and tools. Configure the main parent IT agent to automatically route security or password policy queries to this child agent.",
-                tips: ["Child agents are version-controlled within the solution.", "Keeps parent agent lightweight."]
+                title: "Modular Child Agents",
+                icon: "git-branch",
+                content: "For scale, we create a 'Security Policy Advisor' child agent. This sub-agent has specialized knowledge on identity management. The main parent agent automatically routes security-specific queries to this child, keeping the architecture modular and maintainable as the scope grows.",
+                tips: ["Child agents are embedded and version-controlled.", "Prevents 'monolith' bots that are hard to update.", "Parent-child handovers are transparent to the user."]
             },
             {
                 id: 7,
-                title: "Testing & Deployment",
+                title: "Deployment & Channels",
                 icon: "send",
-                content: "Test the flow in the built-in testing canvas. Check if the tool triggers correctly and variables are stored. Once verified, publish the agent to Microsoft Teams. Configure 'Microsoft (Entra ID)' authentication to ensure seamless Single Sign-On (SSO) for internal employees.",
-                tips: ["Always test edge cases before publishing.", "Wait 1-2 mins for Teams propagation."]
+                content: "We deploy the agent to Microsoft Teams. We configure 'Microsoft (Entra ID)' authentication for Single Sign-On (SSO). Once published, users can chat with the bot in Teams, where it retrieves knowledge answers and executes password reset topics seamlessly within the workspace.",
+                tips: ["Publishes Teams app package automatically.", "SSO recognizes internal employees instantly.", "Testing in Teams verifies rich card and auth rendering."]
             },
             {
                 id: 8,
                 title: "Analytics & Monitoring",
-                icon: "bar-chart",
-                content: "Continuous improvement is key. Use the Analytics dashboard to track session volumes, resolution rates, and tool usage frequency. Review conversation transcripts for escalated or abandoned sessions to refine topic wording or add missing knowledge sources.",
-                tips: ["Monitor 'CSAT' scores.", "Identify frequently triggered fallback topics."]
+                icon: "bar-chart-3",
+                content: "Post-deployment, we monitor the Analytics dashboard. We track session volumes, resolution vs. escalation rates, and specific tool usage. We drill into abandoned conversation transcripts to refine topic triggers or add missing knowledge based on real user failures.",
+                tips: ["Resolution rate = Successful answer vs. escalation.", "Transcripts highlight knowledge gaps.", "Monitor tool success rates (e.g., flow failures)."]
             }
         ];
 
         const bestPractices = [
-            "Use structured topics for complex workflows requiring multi-turn clarification.",
-            "Leverage existing Power Platform connectors to perform actions instead of reinventing the wheel.",
-            "Use variables for context continuity, but manage them wisely (Topic vs. Global).",
-            "Consider child agents for modular design when building large-scale enterprise solutions.",
-            "Implement governance: restrict general web knowledge for grounded, trusted responses."
+            "Use structured topics for complex tasks requiring high precision.",
+            "Leverage connectors to perform actions (ServiceNow, Jira, etc.).",
+            "Employ variables to maintain context and avoid user repetition.",
+            "Modularize with child agents to manage specialized knowledge domains.",
+            "Continuously iterate based on Analytics and session transcript reviews."
         ];
 
-        // --- STATE & RENDER LOGIC ---
+        // --- STATE & RENDER ---
         let activeStepId = 1;
 
         function initData() {
-            // Render Core Concepts
-            const conceptsContainer = document.getElementById('concepts-container');
-            coreConcepts.forEach(concept => {
-                conceptsContainer.innerHTML += `
-                    <div class="bg-slate-800/50 border border-slate-700/50 rounded-2xl p-6 hover:bg-slate-800 transition-colors duration-300">
-                        <i data-lucide="${concept.icon}" class="w-8 h-8 mb-4 ${concept.colorClass}"></i>
-                        <h3 class="text-xl font-semibold mb-3 text-slate-200">${concept.title}</h3>
-                        <p class="text-slate-400 text-sm leading-relaxed">${concept.description}</p>
-                    </div>
-                `;
-            });
-
-            // Render Best Practices
-            const practicesContainer = document.getElementById('practices-container');
-            bestPractices.forEach((practice, idx) => {
-                practicesContainer.innerHTML += `
-                    <div class="flex items-center gap-4 p-5 bg-slate-800/40 border border-slate-700/50 rounded-xl hover:bg-slate-800 transition-colors">
-                        <div class="w-10 h-10 rounded-full bg-bdo-red/10 flex items-center justify-center shrink-0">
-                            <span class="text-bdo-red font-bold">${idx + 1}</span>
+            const agendaCont = document.getElementById('agenda-container');
+            if (agendaCont) {
+                agendaCont.innerHTML = agendaItems.map(item => `
+                    <div class="agenda-card bg-slate-900 border border-slate-800 rounded-xl p-5 transition-all duration-300">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-brand-red/10 rounded-lg flex items-center justify-center shrink-0">
+                                <i data-lucide="${item.icon}" class="w-5 h-5 text-brand-red"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-slate-100 text-sm mb-1">${item.title}</h3>
+                                <p class="text-slate-500 text-xs leading-relaxed">${item.desc}</p>
+                            </div>
                         </div>
-                        <p class="text-slate-200 text-lg">${practice}</p>
                     </div>
-                `;
-            });
+                `).join('');
+            }
+
+            const practicesCont = document.getElementById('practices-container');
+            if (practicesCont) {
+                practicesCont.innerHTML = bestPractices.map((bp, i) => `
+                    <div class="flex items-center gap-4 p-4 bg-slate-900 border border-slate-800 rounded-xl">
+                        <span class="text-brand-red font-black text-sm">${(i + 1).toString().padStart(2, '0')}</span>
+                        <p class="text-slate-300 text-sm">${bp}</p>
+                    </div>
+                `).join('');
+            }
         }
 
         function renderStepper() {
-            const navContainer = document.getElementById('stepper-nav');
-            const contentContainer = document.getElementById('step-content-inner');
-            
-            navContainer.innerHTML = '';
-            contentContainer.innerHTML = '';
+            const nav = document.getElementById('stepper-nav');
+            const cont = document.getElementById('step-content-inner');
+            if (!nav || !cont) return;
 
-            steps.forEach(step => {
+            nav.innerHTML = steps.map(step => {
                 const isActive = step.id === activeStepId;
-
-                // 1. Render Nav Button
-                const btnClass = isActive 
-                    ? 'bg-bdo-red/10 border-bdo-red/50 text-bdo-red' 
-                    : 'bg-slate-900 border-slate-800 text-slate-500 hover:bg-slate-800 hover:text-slate-300';
-                const iconBg = isActive ? 'bg-bdo-red/20' : 'bg-slate-800';
-                const chevronOpacity = isActive ? 'translate-x-1 opacity-100' : 'opacity-0 -translate-x-2';
-
-                const btn = document.createElement('button');
-                btn.className = `flex items-center gap-4 p-4 rounded-xl text-left transition-all duration-300 border w-full ${btnClass}`;
-                btn.onclick = () => {
-                    activeStepId = step.id;
-                    renderStepper();
-                };
-
-                btn.innerHTML = `
-                    <div class="p-2 rounded-lg ${iconBg} transition-colors">
-                        <i data-lucide="${step.icon}" class="w-6 h-6"></i>
-                    </div>
-                    <div class="flex-1 font-medium">
-                        <div class="text-xs uppercase tracking-wider opacity-60 mb-1">Step ${step.id}</div>
-                        ${step.title}
-                    </div>
-                    <i data-lucide="chevron-right" class="w-5 h-5 transition-all duration-300 ${chevronOpacity}"></i>
-                `;
-                navContainer.appendChild(btn);
-
-                // 2. Render Content Panel
-                const panelVisibility = isActive 
-                    ? 'opacity-100 translate-x-0 pointer-events-auto relative z-10' 
-                    : 'opacity-0 translate-x-8 pointer-events-none absolute top-0 left-0 w-full z-0';
-
-                const tipsHtml = step.tips.map(tip => `
-                    <li class="flex items-start gap-3 text-slate-300">
-                        <i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-500 shrink-0 mt-0.5"></i>
-                        <span>${tip}</span>
-                    </li>
-                `).join('');
-
-                const panel = document.createElement('div');
-                panel.className = `step-transition ${panelVisibility}`;
-                panel.innerHTML = `
-                    <div class="flex items-center gap-4 mb-8">
-                        <div class="p-4 bg-bdo-red/20 text-bdo-red rounded-2xl">
-                            <i data-lucide="${step.icon}" class="w-8 h-8"></i>
+                return `
+                    <button onclick="updateStep(${step.id})" class="flex items-center gap-4 p-4 rounded-xl text-left border transition-all duration-300 w-full 
+                        ${isActive ? 'bg-brand-red/10 border-brand-red/40 text-brand-red shadow-lg' : 'bg-slate-950 border-slate-800 text-slate-500 hover:bg-slate-900 hover:text-slate-300'}">
+                        <div class="p-2 rounded-lg ${isActive ? 'bg-brand-red/20' : 'bg-slate-800'} transition-colors">
+                            <i data-lucide="${step.icon}" class="w-5 h-5"></i>
                         </div>
-                        <div>
-                            <div class="text-bdo-red font-semibold tracking-wider text-sm mb-1 uppercase">Phase ${step.id}</div>
-                            <h3 class="text-3xl font-bold text-slate-100">${step.title}</h3>
+                        <div class="flex-1 font-medium text-sm">
+                            <div class="text-[10px] uppercase tracking-widest opacity-60 mb-0.5">Stage ${step.id}</div>
+                            ${step.title}
+                        </div>
+                    </button>
+                `;
+            }).join('');
+
+            cont.innerHTML = steps.map(step => {
+                const isActive = step.id === activeStepId;
+                return `
+                    <div class="step-transition ${isActive ? 'opacity-100 translate-x-0 relative' : 'opacity-0 translate-x-12 absolute top-0 left-0 w-full pointer-events-none'}">
+                        <div class="flex items-center gap-4 mb-8">
+                            <div class="p-4 bg-brand-red/20 text-brand-red rounded-2xl">
+                                <i data-lucide="${step.icon}" class="w-8 h-8"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-3xl font-black text-slate-100 uppercase tracking-tight">${step.title}</h3>
+                                <div class="text-brand-red text-xs font-bold tracking-[0.2em] uppercase mt-1">Insight Protocol Phase ${step.id}</div>
+                            </div>
+                        </div>
+                        
+                        <div class="content-scroll mb-10">
+                            <p class="text-xl text-slate-300 leading-relaxed">${step.content}</p>
+                        </div>
+
+                        <div class="bg-slate-900/80 rounded-2xl p-6 border border-slate-800">
+                            <h4 class="flex items-center gap-2 text-xs font-black text-slate-500 uppercase tracking-widest mb-4">
+                                <i data-lucide="shield" class="w-4 h-4 text-brand-red"></i>
+                                Professional Standards
+                            </h4>
+                            <ul class="space-y-4">
+                                ${step.tips.map(tip => `
+                                    <li class="flex items-start gap-3 text-slate-400 text-sm">
+                                        <i data-lucide="arrow-right-circle" class="w-5 h-5 text-brand-red shrink-0 mt-0.5"></i>
+                                        <span>${tip}</span>
+                                    </li>
+                                `).join('')}
+                            </ul>
                         </div>
                     </div>
-                    
-                    <p class="text-xl text-slate-300 leading-relaxed mb-10">
-                        ${step.content}
-                    </p>
-
-                    <div class="bg-slate-950/50 rounded-xl p-6 border border-slate-800">
-                        <h4 class="flex items-center gap-2 text-sm font-bold text-slate-400 uppercase tracking-wider mb-4">
-                            <i data-lucide="lightbulb" class="w-4 h-4 text-yellow-400"></i>
-                            Pro Tips
-                        </h4>
-                        <ul class="space-y-3">
-                            ${tipsHtml}
-                        </ul>
-                    </div>
                 `;
-                contentContainer.appendChild(panel);
-            });
+            }).join('');
 
-            // Re-initialize Lucide icons for the newly injected HTML
             lucide.createIcons();
         }
 
-        // Initialize App on Load
+        window.updateStep = (id) => {
+            activeStepId = id;
+            renderStepper();
+        };
+
         window.onload = function() {
             initData();
             renderStepper();
