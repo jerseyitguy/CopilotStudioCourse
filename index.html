@@ -74,7 +74,7 @@
 
             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-red/10 border border-brand-red/20 text-brand-red text-xs font-bold uppercase tracking-widest mb-6">
                 <i data-lucide="sparkles" class="w-4 h-4"></i>
-                Insight Session 6: Thursday 23rd April
+                Intelligent Automation Series: IA v AI
             </div>
             <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6">
                 Mastering the <br />
@@ -94,7 +94,7 @@
                     <i data-lucide="list-checks" class="w-8 h-8 text-brand-red"></i>
                     <h2 class="text-3xl font-bold">Session Curriculum</h2>
                 </div>
-                <span class="text-slate-500 text-sm font-mono uppercase">13 Core Modules</span>
+                <span class="text-slate-500 text-sm font-mono uppercase">12 Core Modules</span>
             </div>
             
             <div id="agenda-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -111,10 +111,10 @@
             <div class="mb-16 max-w-3xl">
                 <div class="flex items-center gap-3 mb-4">
                     <i data-lucide="microscope" class="w-8 h-8 text-brand-red"></i>
-                    <h2 class="text-4xl font-bold uppercase tracking-tight">The IT Support Scenario</h2>
+                    <h2 class="text-4xl font-bold uppercase tracking-tight">The Tender Assistant Scenario</h2>
                 </div>
                 <p class="text-lg text-slate-400">
-                    A concrete Worked Example: Designing a hypothetical IT Support agent that demonstrates retrieval, task automation, and autonomous logic for Jersey-based enterprises.
+                    A concrete Worked Example: Designing a 'hypothetical' Tender Assistant agent that demonstrates retrieval, task automation, and autonomous logic for Jersey-based enterprises.
                 </p>
             </div>
 
@@ -166,17 +166,16 @@
         // --- DATA ---
         const agendaItems = [
             { id: 1, title: "Intro & Goals", desc: "Welcome and session overview; defining objectives for the advanced track.", icon: "flag" },
-            { id: 2, title: "Agent Recap", desc: "Agent types (Retrieval vs Task vs Autonomous), Studio vs Light, and core components.", icon: "history" },
-            { id: 3, title: "Advanced Capabilities", desc: "Orchestration, custom flows, variables, prompts, and modular multi-agent design.", icon: "zap" },
-            { id: 4, title: "Use Case: IT Support", desc: "Planning an agent to answer FAQs, reset passwords, and maintain session memory.", icon: "layout" },
-            { id: 5, title: "Setup & Instructions", desc: "Step 1: Creating the agent, defining instructions, and selecting the GPT-4 model.", icon: "settings" },
+            { id: 2, title: "Agent Recap", desc: "Agent types (Retrieval vs Task vs Autonomous), Orchestration, flows, variables, prompts & multi-agent design", icon: "history" },
+            { id: 4, title: "Use Case: Tender Assistant", desc: "Planning an agent to help understand bid requirements, and maintain session memory.", icon: "layout" },
+            { id: 5, title: "Setup & Instructions", desc: "Step 1: Creating the agent, defining instructions, and selecting the GPT-5 model.", icon: "settings" },
             { id: 6, title: "Knowledge Sources", desc: "Step 2: Grounding with SharePoint/PDFs and ensuring data restriction to avoid hallucinations.", icon: "book-open" },
-            { id: 7, title: "Integrating Tools", desc: "Step 3: Connecting Power Automate and connectors (ServiceNow, custom APIs) for actions.", icon: "hammer" },
-            { id: 8, title: "Custom Topics", desc: "Step 4: Authoring multi-step interactions and triggers (e.g., Password Reset Request).", icon: "message-square" },
+            { id: 7, title: "Integrating Tools", desc: "Step 3: Connecting Power Automate and connectors (CRM, custom APIs) for actions.", icon: "hammer" },
+            { id: 8, title: "Custom Topics", desc: "Step 4: Authoring multi-step interactions and triggers (e.g., Create Tender).", icon: "message-square" },
             { id: 9, title: "Variables & Memory", desc: "Step 5: Implementing Topic-level vs. Global variables to persist data across topics.", icon: "database" },
-            { id: 10, title: "Child Agents", desc: "Step 6: Modular design using specialized child agents (e.g., Security Advisor).", icon: "git-branch" },
+            { id: 10, title: "Child Agents", desc: "Step 6: Modular design using specialized child agents (e.g., Bid Evaluator).", icon: "git-branch" },
             { id: 11, title: "Test & Deployment", desc: "Step 7: Built-in tester walkthrough and publishing to Teams with SSO.", icon: "send" },
-            { id: 12, title: "Analytics", desc: "Managing performance: tracking session volumes, resolution rates, and tool usage.", icon: "bar-chart-3" },
+            { id: 12, title: "Analytics", desc: "Managing performance: tracking session volumes, Bid scores, and tool usage.", icon: "bar-chart-3" },
             { id: 13, title: "Best Practices", desc: "Governance, AI safety, and resources for continued learning (Microsoft Labs).", icon: "award" }
         ];
 
@@ -185,42 +184,42 @@
                 id: 1,
                 title: "Creation & Configuration",
                 icon: "settings",
-                content: "We create the 'IT Support Assistant' in the full Copilot Studio portal. In the Agent Instructions, we define the role: 'You are an autonomous IT helpdesk assistant... answer troubleshoot questions... initiate password reset procedures.' We select GPT-4 and, crucially, disable 'Use general knowledge' to force reliance on trusted enterprise data only.",
-                tips: ["Instructions define role, tone, and guardrails.", "GPT-4 ensures high-quality NLU and generation.", "Disabling general knowledge prevents hallucinations."]
+                content: "We create the 'Tender Creation Agent' in the full Copilot Studio portal. In the Agent Instructions, we define the role: 'You are a tender assistant... answer requirement questions... evaluate bids' We select GPT-5 and, crucially, disable 'Use general knowledge' to force reliance on trusted enterprise data only.",
+                tips: ["Instructions define role, tone, and guardrails.", "GPT-5 ensures high-quality NLU and generation.", "Disabling general knowledge prevents hallucinations."]
             },
             {
                 id: 2,
                 title: "Knowledge Grounding",
                 icon: "book-open",
-                content: "Add 'brains' by connecting SharePoint sites and uploading PDFs (Employee IT Handbooks). Copilot Studio uses a RAG pipeline: searching internal docs, summarizing answers, and providing citations. If a user asks 'How do I connect to VPN?', the agent retrieves steps directly from your internal setup guide.",
-                tips: ["Graph search indexes SharePoint automatically.", "RAG summarizes answers with source citations.", "Restrict to internal sources for technical accuracy."]
+                content: "Add 'brains' by connecting SharePoint sites and uploading PDFs (Tone of voice, Client info). Copilot Studio uses a RAG pipeline: searching internal docs, summarizing answers, and providing citations. If a user asks 'Tell me about X Client', the agent retrieves steps directly from your internal files.",
+                tips: ["Graph search indexes SharePoint automatically.", "RAG summarises answers with source citations.", "Restrict to internal sources for technical accuracy."]
             },
             {
                 id: 3,
                 title: "Task Automation Tools",
                 icon: "hammer",
-                content: "Integrate a 'Reset User Password' Power Automate flow as a Tool. Provide a clear description (essential for the planner) and define inputs like 'Employee ID'. We use 'Maker authentication' for internal system actions, allowing the agent to execute backend directory resets triggered by natural language.",
+                content: "Integrate a 'Document creation' Power Automate flow as a Tool. Provide a clear description (essential for the tender) and define inputs like 'Requirements'. We make 'Pipeline tracker' with Planner for internal system actions, allowing the agent to execute tasks triggered by natural language.",
                 tips: ["Tool descriptions help the agent's planner decide when to invoke it.", "1,500+ prebuilt connectors available.", "Inputs/Outputs bind UI variables to backend logic."]
             },
             {
                 id: 4,
                 title: "Topics & Advanced Triggers",
                 icon: "message-square",
-                content: "Create a 'Password Reset Workflow' topic with a trigger phrase list ('reset my password', 'forgot login'). We use the authoring canvas to design a guided dialogue: Ask for User ID -> Confirm action -> Call Action (Tool) -> Send Confirmation Message. This gives the maker total control over sensitive transactions.",
+                content: "Create a 'Requirements Workflow' topic with the instructions looking for trigger works like 'create tender'. We use the authoring canvas to design a guided dialogue: Ask for details -> Doc Title -> Call Action (Tool) -> Send Confirmation Messages and links to documents created.",
                 tips: ["Advanced authoring mode = Turn-by-turn control.", "Triggers route the user into specific logic branches.", "Use 'Ask a question' nodes to fill required variables."]
             },
             {
                 id: 5,
                 title: "Variables & Memory",
                 icon: "database",
-                content: "We store the UserID in a Topic-level variable for the reset flow. To persist data (like Email or Role) across the entire session, we upgrade them to Global Variables. This enables conversation memory: if a user later asks 'What did we just do?', the agent can recall the UserID and session context perfectly.",
+                content: "We store the Requirements in a Topic-level variable for the reset flow. To persist data (like Title & Requirements) across the entire session, we upgrade them to Global Variables. This enables conversation memory: if a user later asks 'What did we just do?', the agent can recall the Requirements and session context perfectly.",
                 tips: ["Topic Variables = Current workflow context.", "Global Variables = Cross-topic session memory.", "Variables carry state, avoiding repetitive questions."]
             },
             {
                 id: 6,
                 title: "Modular Child Agents",
                 icon: "git-branch",
-                content: "For scale, we create a 'Security Policy Advisor' child agent. This sub-agent has specialized knowledge on identity management. The main parent agent automatically routes security-specific queries to this child, keeping the architecture modular and maintainable as the scope grows.",
+                content: "For scale, we create a 'Bid Evaluator' child agent. This sub-agent has specialised knowledge on bid evaluation. The main parent agent automatically routes bid-specific queries to this child, keeping the architecture modular and maintainable as the scope grows.",
                 tips: ["Child agents are embedded and version-controlled.", "Prevents 'monolith' bots that are hard to update.", "Parent-child handovers are transparent to the user."]
             },
             {
@@ -234,16 +233,16 @@
                 id: 8,
                 title: "Analytics & Monitoring",
                 icon: "bar-chart-3",
-                content: "Post-deployment, we monitor the Analytics dashboard. We track session volumes, resolution vs. escalation rates, and specific tool usage. We drill into abandoned conversation transcripts to refine topic triggers or add missing knowledge based on real user failures.",
-                tips: ["Resolution rate = Successful answer vs. escalation.", "Transcripts highlight knowledge gaps.", "Monitor tool success rates (e.g., flow failures)."]
+                content: "Post-deployment, we monitor the Analytics dashboard. We track session volumes, quality of bids in evaluator, and specific tool usage. We drill into abandoned conversation transcripts to refine topic triggers or add missing knowledge based on real user failures.",
+                tips: ["Resolution rate = Better Average bid scores", "Transcripts highlight knowledge gaps.", "Monitor tool success rates (e.g., flow failures)."]
             }
         ];
 
         const bestPractices = [
             "Use structured topics for complex tasks requiring high precision.",
-            "Leverage connectors to perform actions (ServiceNow, Jira, etc.).",
+            "Leverage connectors to perform actions (CRMs, Jira, etc.).",
             "Employ variables to maintain context and avoid user repetition.",
-            "Modularize with child agents to manage specialized knowledge domains.",
+            "Modularise with child agents to manage specialised knowledge domains.",
             "Continuously iterate based on Analytics and session transcript reviews."
         ];
 
